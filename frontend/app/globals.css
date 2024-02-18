@@ -1,0 +1,33 @@
+:root {
+  --white: #fff;
+  --black: #333;
+  --yellow: #fecb2e;
+  --dark: #00384d;
+  --light: #74c7d3;
+  --shadow: 2px 1px 3px 1px #0003;
+  --shadow-text: 2px 1.5px #0003;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  max-width: 1920px;
+  min-height: 100vh;
+  box-shadow: 0 0 10px var(--black);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow-x: hidden;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 6rem;
+  padding: 6rem;
+}

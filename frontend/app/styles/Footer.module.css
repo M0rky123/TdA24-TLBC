@@ -1,0 +1,20 @@
+.upper {
+  padding: 1.75rem 6rem;
+  height: 6rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--light);
+}
+
+.lower {
+  text-align: center;
+  min-height: 40px;
+  padding: 8px 0;
+  font-size: 0.65rem;
+  font-weight: 300;
+  display: grid;
+  place-items: center;
+  background: var(--dark);
+  color: var(--white);
+}
