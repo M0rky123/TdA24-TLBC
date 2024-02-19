@@ -1,5 +1,5 @@
-import style from "@/app/styles/lecturers.module.css";
-import { lalezar } from "@/app/data/fonts.js";
+import style from "./page.module.css";
+import { lalezar } from "@/app/data/fonts";
 import { Metadata } from "next";
 import Filtering from "@/app/components/Filtering";
 

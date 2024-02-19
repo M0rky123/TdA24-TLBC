@@ -27,6 +27,10 @@ export default function Filtering() {
     fetch();
   }, []);
 
+  useEffect(() => {
+    console.log(priceRange);
+  }, [priceRange]);
+
   function modifyArray(item: string, array: string[], setArray: (array: string[]) => void) {
     const index = array.indexOf(item);
     if (index > -1) {
@@ -95,15 +99,16 @@ export default function Filtering() {
             </label>
             <input
               type="number"
-              onChange={() => {
-                console.log("change");
-              }}
-              onInput={() => {
-                console.log("input");
+              onInput={(e) => {
+                let newPrice = Number(e.currentTarget.value);
+                newPrice = newPrice < price.min ? price.min : newPrice;
+                newPrice = newPrice > price.max - 1 ? price.max - 1 : newPrice;
+                setPriceRange([newPrice, priceRange[1]]);
+                e.currentTarget.value = newPrice.toString();
               }}
               key={price.min}
-              value={price.min}
-              name="min"
+              placeholder={price.min.toString()}
+              id="min"
               className={style.input}
             />
           </div>
@@ -114,15 +119,16 @@ export default function Filtering() {
             </label>
             <input
               type="number"
-              onChange={() => {
-                console.log("change");
-              }}
-              onInput={() => {
-                console.log("input");
+              onInput={(e) => {
+                let newPrice = Number(e.currentTarget.value);
+                newPrice = newPrice < price.min + 1 ? price.min + 1 : newPrice;
+                newPrice = newPrice > price.max ? price.max : newPrice;
+                setPriceRange([priceRange[0], newPrice]);
+                e.currentTarget.value = newPrice.toString();
               }}
               key={price.max}
-              value={price.max}
-              name="max"
+              placeholder={price.max.toString()}
+              id="max"
               className={style.input}
             />
           </div>
