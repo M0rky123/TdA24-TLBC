@@ -34,10 +34,16 @@
 }
 
 .btn {
-  background: var(--light);
+  background: var(--black);
+  color: var(--white);
   border: 0;
   border-radius: 12px;
-  color: var(--white);
   cursor: pointer;
-  padding: 0.25rem 1.5rem;
+  padding: 0.4rem 1.5rem;
+}
+
+.btn:hover,
+.btn:focus {
+  outline: 0;
+  transform: scale(1.15);
 }

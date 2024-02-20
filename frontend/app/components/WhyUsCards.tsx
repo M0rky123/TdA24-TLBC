@@ -16,9 +16,9 @@ export default function WhyUsCards() {
   const images = [ideas, resumes, goals, exercises];
   const [index, setIndex] = useState(0);
   const [image, setImage] = useState(ideas);
-  const [header, setHeader] = useState("Teacher digital Agency je místo, kde mohou Vaše nápady kvést.");
-  const [paragraph, setParagraph] = useState(
-    "Nabízíme inspiraci a podporu pro každý kreativní počin. S našimi zdroji a know-how můžete přetavit své myšlenky na skutečnost a posunout svou tvůrčí vizi ještě dál."
+  const [header, setHeader] = useState<string>("Pomáháme tvořit z nápadů skutečnost!");
+  const [paragraph, setParagraph] = useState<string>(
+    "Nabízíme inspiraci a podporu pro každý kreativní počin. S našimi zdroji a know-how můžete přetvořit své myšlenky na skutečnost a posunout svou tvůrčí vizi ještě dál."
   );
 
   useEffect(() => {
