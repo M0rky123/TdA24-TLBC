@@ -6,7 +6,7 @@ from email.mime.text import MIMEText
 smtp_server = 'smtp.gmail.com'
 smtp_port = 587
 sender_email = 'matyas.cernik@gmail.com'
-sender_password = 'aaso zdmj ktwd dqev'
+
 recipient_email = 'thekronisofficial@gmail.com'
 
 # Create message container
