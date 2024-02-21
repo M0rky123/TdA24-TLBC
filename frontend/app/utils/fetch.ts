@@ -1,3 +1,5 @@
+import { headers } from "next/headers";
+
 async function fetchData(url: string, options = {}) {
   try {
     const response = await fetch(url, options);
@@ -26,8 +28,15 @@ export async function fetchLecturer(id: string) {
   return fetchData(`http://localhost:8080/api/lecturers/${id}`, {cache: "no-store"});
 }
 
-export async function fetchLecturerPack(page: number) {
-  return fetchData(`http://localhost:8080/api/lecturers/main/${page}`, {cache: "no-store"});
+export async function fetchLecturerPack(page: number, limit: number) {
+  // return fetchData(`http://localhost:8080/api/lecturers/main/${page}`, {cache: "no-store"});
+  return fetchData(`http://localhost:8080/api/lecturers/main/${page}`, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({ limit }),
+})
 }
 
 export async function getMetadata() {

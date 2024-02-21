@@ -8,11 +8,16 @@ import { openSans } from "../data/fonts";
 import { getMetadata } from "../utils/fetch";
 import Slider from "@mui/material/Slider";
 
-export default function Filtering() {
-  const [locArray, setLocArray] = useState<string[]>([]);
-  const [tagArray, setTagArray] = useState<string[]>([]);
-  const [priceArray, setPriceArray] = useState<number[]>([0, 0]);
+interface FilteringProps {
+  locArray: string[];
+  setLocArray: (array: string[]) => void;
+  tagArray: string[];
+  setTagArray: (array: string[]) => void;
+  priceArray: number[];
+  setPriceArray: (array: number[]) => void;
+}
 
+export default function Filtering({ locArray, setLocArray, tagArray, setTagArray, priceArray, setPriceArray }: FilteringProps) {
   const [tags, setTags] = useState<string[]>([]);
   const [locations, setLocations] = useState<string[]>([]);
   const [price, setPrice] = useState<number[]>([]);
@@ -127,10 +132,10 @@ export default function Filtering() {
           </div>
         </div>
       </div>
-      <div className={`${style.filter} ${style.search}`}>
+      {/* <div className={`${style.filter} ${style.search}`}>
         <span className={style.filter_text}>Vyhledat</span>
         <FontAwesomeIcon icon={faMagnifyingGlass} size="xl" />
-      </div>
+      </div> */}
     </div>
   );
 }
