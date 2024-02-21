@@ -24,7 +24,6 @@ RUN chmod +x start.sh
 RUN npm install -g npm@10.4.0
 
 EXPOSE 80
-EXPOSE 8080
 
 CMD ["./start.sh"]
 
