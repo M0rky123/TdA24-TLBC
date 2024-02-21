@@ -3,7 +3,7 @@ from flask import Flask, make_response, render_template, request, jsonify
 from flask_cors import CORS
 from . import db
 from .db import add_kantor, filter_kantor, get_all_tags, get_count, get, get_all, delete, get_locations, price_min_max, update, get_page
-from .utils import get_login, password_hash, api_verify, add_admin_to_db, remove_admin_from_db
+from .utils import get_admin_login, password_hash, api_verify, add_admin_to_db, remove_admin_from_db
 
 app = Flask(__name__, static_folder="static")
 app.config['DATABASE'] = './app/data/lecture.db'
@@ -39,7 +39,7 @@ def validate_required_fields(data):
 @app.route('/api/lecturers', methods=['POST'] )
 async def createlec():
     data = request.json
-    success = get_login(request.headers)
+    success = get_admin_login(request.headers)
     
     if success:
         if not validate_required_fields(data):
@@ -65,7 +65,7 @@ async def getlec(lector_id):
 
 @app.route('/api/lecturers/<lector_id>', methods=['DELETE'])
 async def deletelec(lector_id):
-    success = get_login(request.headers)
+    success = get_admin_login(request.headers)
     
     if success:
         _, status = get(lector_id)
@@ -79,7 +79,7 @@ async def deletelec(lector_id):
 
 @app.route('/api/lecturers/<lector_id>', methods=['PUT'])
 def updatelec(lector_id):
-    success = get_login(request.headers)
+    success = get_admin_login(request.headers)
     
     if success:
         request_data = request.json
@@ -142,7 +142,7 @@ def delete_admin():
 
 @app.route('/api/admin', methods=['GET'])
 def test_admin():
-    data = get_login(request.headers)
+    data = get_admin_login(request.headers)
     return jsonify({"status": data})
 
 ########### FrontEnd ###########
