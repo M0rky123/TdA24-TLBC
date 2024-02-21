@@ -48,7 +48,7 @@ input[type="number"] {
   background: var(--white);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--light);
+  background: var(--dark);
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--black);
