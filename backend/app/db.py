@@ -3,6 +3,7 @@ from flask import current_app, g, jsonify
 from flask.cli import with_appcontext
 import sqlite3
 import uuid as uuidgen
+import bcrypt
 
 CREATE_TAG_TABLE = """
 CREATE TABLE IF NOT EXISTS tags (
@@ -31,7 +32,21 @@ CREATE TABLE IF NOT EXISTS kantori (
 );
 """
 
-INIT_DB_STATEMENTS = [CREATE_TAG_TABLE, CREATE_KANTORI_TABLE]
+CREATE_ADMIN_TABLE = """ 
+CREATE TABLE IF NOT EXISTS admins (
+    name TEXT NOT NULL,
+    password TEXT NOT NULL
+);
+"""
+
+CREATE_USER_TABLE = """
+CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    password TEXT NOT NULL
+);"""
+
+INIT_DB_STATEMENTS = [CREATE_TAG_TABLE, CREATE_KANTORI_TABLE, CREATE_ADMIN_TABLE, CREATE_USER_TABLE]
 
 # DONE: Refactor the functions, make function names more continual, delete useless comments, add comments to the code that make sense, don't fuck up what works
 
@@ -110,7 +125,7 @@ def get_all():
 
 def get_page(page_number, limit=6):
     """
-    This function returns a page of 6 (Can be changed with limit param)Lecturers in our database packed in a JSON
+    This function returns a page of 6 (Can be changed with limit param) Lecturers in our database packed in a JSON
     """
     offset = (int(page_number) - 1) * limit
 

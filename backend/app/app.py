@@ -3,6 +3,7 @@ from flask import Flask, make_response, render_template, request, jsonify
 from flask_cors import CORS
 from . import db
 from .db import add_kantor, filter_kantor, get_all_tags, get_count, get, get_all, delete, get_locations, price_min_max, update, get_page
+from .utils import get_login, password_hash, api_verify, add_admin_to_db, remove_admin_from_db
 
 app = Flask(__name__, static_folder="static")
 app.config['DATABASE'] = './app/data/lecture.db'
@@ -38,17 +39,23 @@ def validate_required_fields(data):
 @app.route('/api/lecturers', methods=['POST'] )
 async def createlec():
     data = request.json
-
-    if not validate_required_fields(data):
-        return jsonify({"error": "Missing required fields"}), 400
+    success = get_login(request.headers)
     
-    data, status = add_kantor(data)
+    if success:
+        if not validate_required_fields(data):
+            return jsonify({"error": "Missing required fields"}), 400
+        
+        data, status = add_kantor(data)
 
-    return data, status
+        return data, status
+
+    else:
+        return jsonify({"error": "Unauthorized"}), 401
 
 @app.route('/api/lecturers', methods=['GET'] )
 async def getalllec():
     return get_all()
+    
 
 @app.route('/api/lecturers/<lector_id>', methods=['GET'])
 async def getlec(lector_id):
@@ -58,26 +65,38 @@ async def getlec(lector_id):
 
 @app.route('/api/lecturers/<lector_id>', methods=['DELETE'])
 async def deletelec(lector_id):
-    _, status = get(lector_id)
-    if status == 200:
-        delete(lector_id)
-        return {"status": "deleted"}, status
+    success = get_login(request.headers)
+    
+    if success:
+        _, status = get(lector_id)
+        if status == 200:
+            delete(lector_id)
+            return {"status": "deleted"}, status
+        else:
+            return {"status": "not found"}, 404
     else:
-        return {"status": "not found"}, 404
+        return jsonify({"error": "Unauthorized"}), 401
 
 @app.route('/api/lecturers/<lector_id>', methods=['PUT'])
 def updatelec(lector_id):
-    request_data = request.json
-    data, status = get(lector_id)
-    if status == 200:
-        updated_data, status = update(lector_id, request_data)
-        return updated_data, status
-    else:
-        return jsonify(data), status
+    success = get_login(request.headers)
     
+    if success:
+        request_data = request.json
+        data, status = get(lector_id)
+        if status == 200:
+            updated_data, status = update(lector_id, request_data)
+            return updated_data, status
+        else:
+            return jsonify(data), status
+    else:
+        return jsonify({"error": "Unauthorized"}), 401
+
 @app.route('/api/lecturers/main/<offset>', methods=['GET'])
 async def getsixlec(offset):
-    page, status = get_page(offset)
+    request_data = request.json
+    limit = request_data.get("limit")
+    page, status = get_page(page_number=offset, limit=limit)
     return page, status
 
 @app.route('/api/lecturers/filter', methods=['POST'])
@@ -104,6 +123,27 @@ def misc():
 
     # return jsonify({"data": data, "count": count, "min_max": min_max, "location": location, "existing_tags": existing_tags})
     return jsonify({"count": count, "min_max": min_max, "location": location, "existing_tags": existing_tags})
+
+########### Debug ###########
+
+@app.route('/api/admin', methods=['POST'])
+def admin():
+    data = request.json
+    name = data.get('name')
+    password = data.get('password')
+    hashed_password = password_hash(password)
+    add_admin_to_db(name, hashed_password)
+    return jsonify({"status": "created"}), 201
+
+@app.route('/api/admin', methods=['DELETE'])
+def delete_admin():
+    remove_admin_from_db()
+    return jsonify({"status": "deleted"})
+
+@app.route('/api/admin', methods=['GET'])
+def test_admin():
+    data = get_login(request.headers)
+    return jsonify({"status": data})
 
 ########### FrontEnd ###########
 
