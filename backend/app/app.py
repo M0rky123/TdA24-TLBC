@@ -9,7 +9,7 @@ app = Flask(__name__, static_folder="static")
 app.config['DATABASE'] = './app/data/lecture.db'
 app.json.sort_keys = False
 
-CORS(app)
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 db.init_app(app)
 
