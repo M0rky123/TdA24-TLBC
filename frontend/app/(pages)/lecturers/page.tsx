@@ -4,7 +4,7 @@ import style from "./page.module.css";
 import { lalezar } from "@/app/data/fonts";
 import Filtering from "@/app/components/Filtering";
 import Paging from "@/app/components/Paging";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Cards from "@/app/components/Cards";
 
 export default function Lecturers() {

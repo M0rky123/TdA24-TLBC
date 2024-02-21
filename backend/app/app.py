@@ -92,11 +92,13 @@ def updatelec(lector_id):
     else:
         return jsonify({"error": "Unauthorized"}), 401
 
-@app.route('/api/lecturers/main/<offset>', methods=['POST'])
+@app.route('/api/lecturers/main/<offset>', methods=['GET'])
 async def getsixlec(offset):
-    request_data = request.json
+    request_data = request.headers
     limit = request_data.get("limit")
-    page, status = get_page(page_number=offset, limit=limit)
+    print(limit)
+    page, status = get_page(page_number=offset, limit=int(limit))
+    print(page)
     return page, status
 
 @app.route('/api/lecturers/filter', methods=['POST'])

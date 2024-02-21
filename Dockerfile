@@ -5,7 +5,7 @@ FROM python:3.10-buster
 
 WORKDIR /app
 
-RUN pip install pipenv flask[async] flask_cors requests gunicorn
+RUN pip install pipenv flask[async] flask_cors requests gunicorn bcrypt
 
 RUN apt-get update && \
     apt-get install -y curl && \
