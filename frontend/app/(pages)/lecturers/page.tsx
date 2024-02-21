@@ -8,7 +8,10 @@ import { useEffect, useState } from "react";
 import Cards from "@/app/components/Cards";
 
 export default function Lecturers() {
-  document.title = "Katalog lektorů";
+  useEffect(() => {
+    document.title = "Katalog lektorů";
+  }, []);
+  
 
   const [locArray, setLocArray] = useState<string[]>([]);
   const [tagArray, setTagArray] = useState<string[]>([]);

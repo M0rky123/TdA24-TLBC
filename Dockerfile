@@ -3,7 +3,7 @@
 
 FROM python:3.10-buster
 
-WORKDIR /app
+WORKDIR /
 
 RUN pip install pipenv flask[async] flask_cors requests gunicorn bcrypt
 
