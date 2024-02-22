@@ -10,7 +10,7 @@ export default async function page({ params: { uuid } }: { params: { uuid: strin
   return (
     <>
       <div className={style.header}>
-        <Image src={lecturer.pricture_url} alt="foto lektora" />
+        <Image src={lecturer.pricture_url ? lecturer.pricture_url : "https://picsum.photos/300"} alt="foto lektora" width={300} height={300} />
         <h2>{lecturer.title_before + " " + lecturer.first_name + " " + lecturer.middle_name + " " + lecturer.last_name + " " + lecturer.title_after}</h2>
         <h3>{lecturer.claim}</h3>
         <p>{lecturer.bio}</p>
@@ -41,8 +41,8 @@ export default async function page({ params: { uuid } }: { params: { uuid: strin
       <div className={style.tags}>
         <ul>
           <li>TAG IKONA</li>
-          {lecturer.tags.map((tag: string) => (
-            <li>{tag.name}</li>
+          {lecturer.tags.map((tag: { name: string; uuid: string }) => (
+            <li>{tag?.name}</li>
           ))}
         </ul>
       </div>
