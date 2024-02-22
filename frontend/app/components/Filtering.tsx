@@ -128,7 +128,16 @@ export default function Filtering({ locArray, setLocArray, tagArray, setTagArray
             />
           </div>
           <div className={style.slider}>
-            <Slider value={priceArray} step={1} min={price[0]} max={price[1]} onChange={sliderOnChange} disableSwap size="small" />
+            <Slider
+              value={priceArray}
+              step={1}
+              min={price[0]}
+              max={price[1]}
+              onChange={sliderOnChange}
+              disableSwap
+              size="small"
+              style={{ color: "var(--light)" }}
+            />
           </div>
         </div>
       </div>

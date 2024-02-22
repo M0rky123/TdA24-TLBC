@@ -1,6 +1,6 @@
 "use client";
 
-import { Key, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { fetchLecturerPack } from "../utils/fetch";
 import Card from "./Card";
 import style from "@/app/styles/Cards.module.css";
