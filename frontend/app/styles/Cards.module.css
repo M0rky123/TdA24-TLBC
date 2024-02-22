@@ -46,7 +46,7 @@
 
 .tags {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   list-style: none;
   flex-wrap: wrap;
