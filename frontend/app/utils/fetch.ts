@@ -31,11 +31,11 @@ export async function fetchLecturer(id: string) {
 export async function fetchLecturerPack(page: number, limit: number) {
   // return fetchData(`http://localhost:8080/api/lecturers/main/${page}`, {cache: "no-store"});
   return fetchData(`http://localhost:8080/api/lecturers/main/${page}`, {
-  method: 'POST',
+  method: 'GET',
   headers: {
     'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({ limit }),
+    'limit': limit
+  }
 })
 }
 

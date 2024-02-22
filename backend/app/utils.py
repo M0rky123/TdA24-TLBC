@@ -2,12 +2,32 @@ import bcrypt
 import sqlite3
 from flask import current_app
 
+def get_user_login(name, password):
+    if name == None and password == None:
+        return False
+    else:
+        with sqlite3.connect(current_app.config['DATABASE']) as connection:
+            cursor = connection.cursor()
+            cursor.execute("SELECT password FROM users WHERE name = ?", (name,))
+            hashed_password = cursor.fetchone()
+        success = bcrypt.checkpw(password.encode('utf-8'), hashed_password[0])
+        return success
+    
+def add_user_to_db(name, password, lector_id):
+    if name == None and password == None and lector_id == None:
+        return {"error": "Missing required fields"}
+    else:
+        with sqlite3.connect(current_app.config['DATABASE']) as connection:
+            cursor = connection.cursor()
+            cursor.execute("INSERT INTO users (name, password, lector_id) VALUES (?, ?, ?)", (name, password, lector_id))
+            connection.commit()
+        return {"success": "User added"}
 
-def get_login(data):
+
+#### ADMIN STUFF ####
+def get_admin_login(data):
     name = data.get('name')
-    print(name)
     password = data.get('password')
-    print(password)
     if name == None:
         return False
     if password == None:
