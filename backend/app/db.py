@@ -5,6 +5,8 @@ import sqlite3
 import uuid as uuidgen
 import bcrypt
 
+from .utils import add_user_to_db
+
 CREATE_TAG_TABLE = """
 CREATE TABLE IF NOT EXISTS tags (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -44,6 +46,7 @@ CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
     password TEXT NOT NULL,
+    auth_token TEXT NOT NULL,
     lecture_id TEXT NOT NULL
 );"""
 
@@ -309,6 +312,8 @@ def add_kantor(data):
     claim = data.get('claim')
     bio = data.get('bio')
     price = data.get('price_per_hour')
+    name = data.get('username')
+    password = data.get('password')
     email = data.get('contact', {}).get('emails', [])
     phone = data.get('contact', {}).get('telephone_numbers', [])
     tags = data.get('tags', [])
@@ -329,6 +334,9 @@ def add_kantor(data):
         cursor.execute("INSERT INTO kantori (title_before, first_name, middle_name, last_name, picture_url, title_after, price, location, claim, bio, email, phone, uuid, tags) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)", (title_before, first_name, middle_name, last_name, picture_url, title_after, price, location, claim, bio, str(email), str(phone), str(uuid), str(tags)))
         
     connection.commit()
+
+    add_user_to_db(name, password, uuid)
+
     return data, 200
 
 def filter_kantor(filtered_tags=None, loc=None, min_max=None):
