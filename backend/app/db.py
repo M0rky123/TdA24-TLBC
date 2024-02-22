@@ -30,7 +30,8 @@ CREATE TABLE IF NOT EXISTS kantori (
   bio TEXT,
   email TEXT NOT NULL,
   phone TEXT NOT NULL,
-  tags TEXT
+  tags TEXT,
+  unavailable_days TEXT
 );
 """
 
