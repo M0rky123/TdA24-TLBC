@@ -1,6 +1,10 @@
 import bcrypt
 import sqlite3
 from flask import current_app
+import secrets
+
+def generate_auth_token(length=32):
+    return secrets.token_hex(length)
 
 def get_user_login(name, password):
     if name == None and password == None:
@@ -17,12 +21,12 @@ def add_user_to_db(name, password, lector_id):
     if name == None and password == None and lector_id == None:
         return {"error": "Missing required fields"}
     else:
+        auth_token = generate_auth_token()
         with sqlite3.connect(current_app.config['DATABASE']) as connection:
             cursor = connection.cursor()
-            cursor.execute("INSERT INTO users (name, password, lector_id) VALUES (?, ?, ?)", (name, password, lector_id))
+            cursor.execute("INSERT INTO users (name, password, auth_token, lector_id) VALUES (?, ?, ?)", (name, password, auth_token, lector_id))
             connection.commit()
-        return {"success": "User added"}
-
+        return 200, {"success": "User added"}
 
 #### ADMIN STUFF ####
 def get_admin_login(data):

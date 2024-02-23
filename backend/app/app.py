@@ -3,7 +3,7 @@ from flask import Flask, make_response, render_template, request, jsonify
 from flask_cors import CORS
 from . import db
 from .db import add_kantor, filter_kantor, get_all_tags, get_count, get, get_all, delete, get_locations, price_min_max, update, get_page
-from .utils import get_admin_login, password_hash, api_verify, add_admin_to_db, remove_admin_from_db
+from .utils import get_admin_login, get_user_login, password_hash, api_verify, add_admin_to_db, remove_admin_from_db
 
 app = Flask(__name__, static_folder="static")
 app.config['DATABASE'] = './app/data/lecture.db'
@@ -56,12 +56,10 @@ async def createlec():
 async def getalllec():
     return get_all()
     
-
 @app.route('/api/lecturers/<lector_id>', methods=['GET'])
 async def getlec(lector_id):
     data, status = get(lector_id)
     return data, status
-
 
 @app.route('/api/lecturers/<lector_id>', methods=['DELETE'])
 async def deletelec(lector_id):
@@ -126,6 +124,16 @@ def misc():
     # return jsonify({"data": data, "count": count, "min_max": min_max, "location": location, "existing_tags": existing_tags})
     return jsonify({"count": count, "min_max": min_max, "location": location, "existing_tags": existing_tags})
 
+@app.route("/api/auth", methods=["POST"])
+def auth():
+    data = request.json
+    name = data.get('name')
+    password = data.get('password')
+    success = get_user_login(name, password)
+    if success:
+        return jsonify({"status": "success"}), 200
+    else:
+        return jsonify({"status": "failed"}), 401
 ########### Debug ###########
 
 @app.route('/api/admin', methods=['POST'])
