@@ -35,8 +35,8 @@ export default function Card({
   return (
     <div className={style.card + " " + openSans}>
       <div className={style.content}>
-        <Image src={picture_url} alt="foto lektora" width={300} height={300} className={style.image} priority />
         <div className={style.headers}>
+          <Image src={picture_url} alt="foto lektora" width={300} height={300} className={style.image} priority />
           <h3 className={style.h3}>{title_before + " " + first_name + " " + middle_name + " " + last_name + " " + title_after}</h3>
           <span>{claim}</span>
         </div>
@@ -69,7 +69,7 @@ export default function Card({
             </ul>
           </div>
         </div>
-        <div className={style.buttons}>
+        <div className={style.button}>
           <Button text="Více podrobností" url={"/lecturers/" + uuid} active />
         </div>
       </div>

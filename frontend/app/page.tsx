@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title: "Domů",
 };
 
-export default function Home() {
+export default async function Home() {
   return (
     <>
       <section className={style.intro}>

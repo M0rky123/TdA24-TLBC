@@ -17,10 +17,10 @@
 .content {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   height: 100%;
-  gap: 1rem;
+  gap: 2rem;
 }
 
 .image {
@@ -62,4 +62,8 @@
   border-radius: 0.25rem;
   background: var(--light);
   white-space: wrap;
+}
+
+.button {
+  margin-top: auto;
 }

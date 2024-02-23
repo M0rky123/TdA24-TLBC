@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { fetchLecturerPack } from "../utils/fetch";
 import Card from "./Card";
 import style from "@/app/styles/Cards.module.css";
+import { openSans } from "../data/fonts";
 
 interface CardsProps {
   page: number;
@@ -28,33 +29,41 @@ interface Lecturer {
 
 export default function Cards({ page, locArray, tagArray, priceArray }: CardsProps) {
   const [lecturers, setLecturers] = useState<Lecturer[]>([]);
+  const [empty, setEmpty] = useState<boolean>(true);
 
   useEffect(() => {
-    async function getLecturers() {
+    async function getLect() {
       const data = await fetchLecturerPack(page, 8);
       setLecturers(data);
+      lecturers.length == 0 && setEmpty(true);
     }
-    getLecturers();
+    getLect();
   }, [page]);
 
   return (
     <section className={style.cards}>
-      {lecturers.map((lecturer: Lecturer) => (
-        <Card
-          key={lecturer.uuid}
-          uuid={lecturer.uuid}
-          title_before={lecturer.title_before}
-          first_name={lecturer.first_name}
-          middle_name={lecturer.middle_name}
-          last_name={lecturer.last_name}
-          title_after={lecturer.title_after}
-          picture_url={lecturer.picture_url}
-          location={lecturer.location}
-          claim={lecturer.claim}
-          tags={lecturer.tags?.map((tag) => tag.name)}
-          price_per_hour={lecturer.price_per_hour}
-        />
-      ))}
+      {empty ? (
+        <p className={openSans} style={{ gridColumn: "1 / -1", textAlign: "center" }}>
+          Nebyli nalezeni žádní lektoři.
+        </p>
+      ) : (
+        lecturers.map((lecturer: Lecturer) => (
+          <Card
+            key={lecturer.uuid}
+            uuid={lecturer.uuid}
+            title_before={lecturer.title_before}
+            first_name={lecturer.first_name}
+            middle_name={lecturer.middle_name}
+            last_name={lecturer.last_name}
+            title_after={lecturer.title_after}
+            picture_url={lecturer.picture_url}
+            location={lecturer.location}
+            claim={lecturer.claim}
+            tags={lecturer.tags?.map((tag) => tag.name)}
+            price_per_hour={lecturer.price_per_hour}
+          />
+        ))
+      )}
     </section>
   );
 }
