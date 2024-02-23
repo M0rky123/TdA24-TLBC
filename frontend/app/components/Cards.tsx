@@ -29,13 +29,13 @@ interface Lecturer {
 
 export default function Cards({ page, locArray, tagArray, priceArray }: CardsProps) {
   const [lecturers, setLecturers] = useState<Lecturer[]>([]);
-  const [empty, setEmpty] = useState<boolean>(true);
+  const [empty, setEmpty] = useState<boolean>(false);
 
   useEffect(() => {
     async function getLect() {
       const data = await fetchLecturerPack(page, 8);
       setLecturers(data);
-      lecturers.length == 0 && setEmpty(true);
+      data.length == 0 && setEmpty(true);
     }
     getLect();
   }, [page]);
