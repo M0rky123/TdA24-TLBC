@@ -24,7 +24,7 @@ def add_user_to_db(name, password, lector_id):
         auth_token = generate_auth_token()
         with sqlite3.connect(current_app.config['DATABASE']) as connection:
             cursor = connection.cursor()
-            cursor.execute("INSERT INTO users (name, password, auth_token, lector_id) VALUES (?, ?, ?)", (name, password, auth_token, lector_id))
+            cursor.execute("INSERT INTO users (name, password, auth_token, lector_id) VALUES (?, ?, ?, ?)", (name, password, auth_token, lector_id))
             connection.commit()
         return 200, {"success": "User added"}
 

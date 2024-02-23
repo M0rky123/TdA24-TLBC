@@ -10,9 +10,10 @@ bios = ["✨ Adventure seeker | Coffee lover ☕ | Making memories around the wo
 picture_url = "https://picsum.photos/1920/1080/?random"
 
 def generate_random_person():
+    name = random.choice(first_names)
     randomized_data = {
             "title_before": random.choice(titles_before_names),
-            "first_name": random.choice(first_names),
+            "first_name": name,
             "middle_name": random.choice(first_names) if random.choice([True, False]) else None,
             "last_name": random.choice(last_names),
             "title_after": random.choice(titles_after_names),
@@ -20,6 +21,8 @@ def generate_random_person():
             "location": random.choice(city_names),
             "claim": random.choice(claims),
             "bio": random.choice(bios),
+            "username": name,
+            "password": "1234",
             "tags": [
                 {
                     "name": random.choice(tags)
@@ -41,7 +44,7 @@ headers = {
     "password": "d8Ef6!dGG_pv"
 }
 
-for i in range(1):
+for i in range(30):
     random_person = generate_random_person()
 
     # Make the POST request
