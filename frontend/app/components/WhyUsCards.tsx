@@ -22,9 +22,12 @@ export default function WhyUsCards() {
   );
 
   useEffect(() => {
-    setImage(images[index]);
-    setHeader(texts[index][0]);
-    setParagraph(texts[index][1]);
+    const updateContent = () => {
+      setImage(images[index]);
+      setHeader(texts[index][0]);
+      setParagraph(texts[index][1]);
+    };
+    updateContent();
   }, [index]);
 
   return (
