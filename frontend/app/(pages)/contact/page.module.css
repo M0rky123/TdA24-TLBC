@@ -30,6 +30,10 @@
   gap: 0.5rem;
 }
 
+.span {
+  display: flex;
+}
+
 .formContainer {
   max-width: 500px;
   padding: 1.5rem;

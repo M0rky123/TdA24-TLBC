@@ -1,51 +1,83 @@
 import Image from "next/image";
 import style from "./page.module.css";
 import { fetchLecturer } from "@/app/utils/fetch";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "@/app/components/Button";
+import { lalezar, openSans } from "@/app/data/fonts";
+import { faAt, faCoins, faMapPin, faSquarePhone, faTag } from "@fortawesome/free-solid-svg-icons";
 
 export default async function page({ params: { uuid } }: { params: { uuid: string } }) {
   const lecturer = await fetchLecturer(uuid);
-  console.log(lecturer);
+
+  for (let key in lecturer) {
+    if (lecturer[key] === null) {
+      lecturer[key] = "";
+    }
+  }
 
   return (
-    <>
+    <div className={style.container + " " + openSans}>
       <div className={style.header}>
-        <Image src={lecturer.pricture_url ? lecturer.pricture_url : "https://picsum.photos/300"} alt="foto lektora" width={300} height={300} />
-        <h2>{lecturer.title_before + " " + lecturer.first_name + " " + lecturer.middle_name + " " + lecturer.last_name + " " + lecturer.title_after}</h2>
-        <h3>{lecturer.claim}</h3>
-        <p>{lecturer.bio}</p>
+        <Image
+          src={lecturer.pricture_url ? lecturer.pricture_url : "https://picsum.photos/300"}
+          alt="foto lektora"
+          width={300}
+          height={300}
+          style={{ borderRadius: "1rem" }}
+        />
+        <div className={style.text}>
+          <h2 className={lalezar + " " + style.h2}>
+            {lecturer.title_before + " " + lecturer.first_name + " " + lecturer.middle_name + " " + lecturer.last_name + " " + lecturer.title_after}
+          </h2>
+          <h3 className={style.h3}>{lecturer.claim}</h3>
+          <p>{lecturer.bio}</p>
+        </div>
       </div>
       <div className={style.info}>
-        <Button text="Rezervovat" url={"/reservation/" + uuid} />
-        <div>
-          <span>{lecturer.location}</span>
-          <span>{lecturer.price_per_hour}</span>
+        <div style={{ width: "300px", display: "flex", alignItems: "center" }}>
+          <Button text="Rezervovat" url={"/reserve/" + uuid} width="100%" active />
         </div>
-        <div className={style.list}>
-          <span></span>
-          <ul>
-            {lecturer.contact.telephone_numbers.map((phone: string) => (
-              <li>{phone}</li>
+        <div className={style.priceLoc}>
+          <span className={style.span}>
+            <FontAwesomeIcon icon={faMapPin} className={style.icon} /> &nbsp;
+            {lecturer.location}
+          </span>
+          <span className={style.span}>
+            <FontAwesomeIcon icon={faCoins} className={style.icon} /> &nbsp;
+            {lecturer.price_per_hour}
+          </span>
+        </div>
+        <div className={style.listContainer}>
+          <span>
+            <FontAwesomeIcon icon={faSquarePhone} className={style.icon} />
+          </span>
+          <ul className={style.list}>
+            {lecturer.contact.telephone_numbers?.map((phone: string, index: number) => (
+              <li key={index}>{phone}</li>
             ))}
           </ul>
         </div>
-        <div className={style.list}>
-          <span></span>
-          <ul>
-            {lecturer.contact.emails.map((email: string) => (
-              <li>{email}</li>
+        <div className={style.listContainer}>
+          <span>
+            <FontAwesomeIcon icon={faAt} className={style.icon} />
+          </span>
+          <ul className={style.list}>
+            {lecturer.contact.emails?.map((email: string, index: number) => (
+              <li key={index}>{email}</li>
             ))}
           </ul>
         </div>
       </div>
-      <div className={style.tags}>
-        <ul>
-          <li>TAG IKONA</li>
-          {lecturer.tags.map((tag: { name: string; uuid: string }) => (
-            <li>{tag?.name}</li>
-          ))}
-        </ul>
-      </div>
-    </>
+      <ul className={style.tags}>
+        <li>
+          <FontAwesomeIcon icon={faTag} className={style.icon} />
+        </li>
+        {lecturer.tags?.map((tag: { name: string; uuid: string }, index: number) => (
+          <li key={index} className={style.tag}>
+            {tag?.name}
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }

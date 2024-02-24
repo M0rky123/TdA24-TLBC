@@ -11,7 +11,6 @@ export default function Lecturers() {
   useEffect(() => {
     document.title = "Katalog lektorů";
   }, []);
-  
 
   const [locArray, setLocArray] = useState<string[]>([]);
   const [tagArray, setTagArray] = useState<string[]>([]);

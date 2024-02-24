@@ -67,3 +67,11 @@
 .button {
   margin-top: auto;
 }
+
+.blankCard {
+  width: 100%;
+  min-height: 550px;
+  border-radius: 2rem;
+  background: var(--black);
+  box-shadow: var(--shadow);
+}

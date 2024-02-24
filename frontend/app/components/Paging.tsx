@@ -9,7 +9,7 @@ export default function Paging({ page, setPage }: { page: number; setPage: React
 
   useEffect(() => {
     getMetadata().then((data) => {
-      setPages(Math.ceil(data.count / 8));
+      setPages(Math.ceil(data.count / 12));
     });
   }, []);
 
