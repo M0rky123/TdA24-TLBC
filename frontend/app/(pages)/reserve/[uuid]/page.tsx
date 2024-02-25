@@ -11,7 +11,7 @@ export default async function page({ params: { uuid } }: { params: { uuid: strin
       <h2 className={style.h2 + " " + lalezar}>Rezervace</h2>
       <div className={style.container + " " + openSans}>
         <section className={style.lecturer}>
-          <Image src="https://picsum.photos/300" alt="foto lektora" width={300} height={300} className={style.image} />
+          <Image src="https://picsum.photos/300" alt="foto lektora" width={300} height={300} className={style.image} priority />
           <div className={style.info}>
             <span className={style.span}>
               <FontAwesomeIcon icon={faUser} className={style.icon} /> Mgr. Petra Swil Plachá MBA

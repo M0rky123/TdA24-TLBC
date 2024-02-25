@@ -1,11 +1,13 @@
-import { useState, useMemo } from "react";
-import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
+import { useState } from "react";
+import { useLoadScript } from "@react-google-maps/api";
 import usePlacesAutocomplete, { getGeocode, getLatLng } from "use-places-autocomplete";
+import style from "../styles/GoogleMap.module.css";
 
 export default function Places() {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: "AIzaSyBPJorFYXUAEk46-ZRrMlZIREjAR-UVi_4",
     libraries: ["places"],
+    region: "cz",
   });
 
   if (!isLoaded) return <div>Loading...</div>;
@@ -13,7 +15,6 @@ export default function Places() {
 }
 
 function Map() {
-  const center = useMemo(() => ({ lat: 43.45, lng: -80.49 }), []);
   const [selected, setSelected] = useState(null);
 
   return (
@@ -21,10 +22,6 @@ function Map() {
       <div className="places-container">
         <PlacesAutocomplete setSelected={setSelected} />
       </div>
-
-      <GoogleMap zoom={10} center={center} mapContainerClassName="map-container">
-        {selected && <Marker position={selected} />}
-      </GoogleMap>
     </>
   );
 }
@@ -38,7 +35,7 @@ const PlacesAutocomplete = ({ setSelected }: { setSelected: any }) => {
     clearSuggestions,
   } = usePlacesAutocomplete();
 
-  const handleSelect = async (address: string) => {
+  const handleClick = async (address: string) => {
     setValue(address, false);
     clearSuggestions();
 
@@ -52,12 +49,18 @@ const PlacesAutocomplete = ({ setSelected }: { setSelected: any }) => {
       <input
         value={value}
         onChange={(e: { target: { value: string } }) => setValue(e.target.value)}
-        onSelect={(e: React.ChangeEvent<HTMLInputElement>) => handleSelect(e.target.value)}
         disabled={!ready}
-        className="combobox-input"
-        placeholder="Search an address"
+        className={style.input}
+        placeholder="Zadejte adresu"
       />
-      <ul>{status === "OK" && data.map(({ place_id, description }) => <li key={place_id}>{description}</li>)}</ul>
+      <ul className={style.list}>
+        {status === "OK" &&
+          data.map(({ place_id, description }) => (
+            <li className={style.item} key={place_id} onClick={() => handleClick(description)}>
+              {description}
+            </li>
+          ))}
+      </ul>
     </>
   );
 };

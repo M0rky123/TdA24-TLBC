@@ -1,17 +1,24 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import style from "../../styles/reserve/Reserve.module.css";
 import { reserve } from "@/app/data/reserve";
-import ReserveContact from "./ReserveContact";
-import ReserveDate from "./ReserveDate";
-import ReservePlace from "./ReservePlace";
-import ReserveRecap from "./ReserveRecap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowCircleLeft, faArrowCircleRight } from "@fortawesome/free-solid-svg-icons";
+import ReserveContact from "./ReserveContact";
+import ReservePlace from "./ReservePlace";
+import ReserveDate from "./ReserveDate";
+import ReserveRecap from "./ReserveRecap";
 
 export default function Reserve() {
-  const items = [ReserveContact(), ReservePlace(), ReserveDate(), ReserveRecap()];
+  const [fName, setFName] = useState<string>("");
+
+  const items = [<ReserveContact fName={fName} setFName={setFName} />, <ReservePlace />, <ReserveDate />, <ReserveRecap />];
+
+  useEffect(() => {
+    console.log(fName);
+  }, [fName]);
+
   const [page, setPage] = useState(0);
 
   return (

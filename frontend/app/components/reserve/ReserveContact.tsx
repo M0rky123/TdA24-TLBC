@@ -1,12 +1,23 @@
 import style from "../../styles/reserve/ReserveContact.module.css";
 
-export default function ReserveContact() {
+export default function ReserveContact({ fName, setFName }: { fName: string; setFName: (value: string) => void }) {
   return (
     <form className={style.form}>
       <div className={style.fullName}>
         <div className={style.field}>
           <label htmlFor="fName">Jméno</label>
-          <input type="text" name="fName" id="fName" className={style.input} autoComplete="on" />
+          <input
+            type="text"
+            name="fName"
+            id="fName"
+            onInput={(event: React.ChangeEvent<HTMLInputElement>) => {
+              setFName(event.target.value);
+              console.log(fName);
+            }}
+            value={fName}
+            className={style.input}
+            autoComplete="on"
+          />
         </div>
         <div className={style.field}>
           <label htmlFor="lName">Příjmení</label>
