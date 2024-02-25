@@ -57,3 +57,7 @@ input[type="number"] {
 .MuiDateCalendar-root.css-1q04gal-MuiDateCalendar-root {
   margin: auto 0;
 }
+
+.MuiButtonBase-root.MuiPickersDay-root.Mui-selected.MuiPickersDay-dayWithMargin {
+  background: var(--dark);
+}

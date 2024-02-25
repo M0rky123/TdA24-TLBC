@@ -15,14 +15,14 @@ export default function ReservePlace({
   return (
     <>
       <ul className={style.list}>
-        <li onClick={() => setVariant("online")} className={`${style.item} ${variant === "online" && style.activeItem}`} style={{ borderRadius: "0.5rem" }}>
+        <li onClick={() => setVariant("Online")} className={`${style.item} ${variant === "Online" && style.activeItem}`} style={{ borderRadius: "0.5rem" }}>
           Online
         </li>
-        <li onClick={() => setVariant("offline")} className={`${style.item} ${variant === "offline" && style.activeItem}`} style={{ borderRadius: "0.5rem" }}>
-          Offline
+        <li onClick={() => setVariant("Osobně")} className={`${style.item} ${variant === "Osobně" && style.activeItem}`} style={{ borderRadius: "0.5rem" }}>
+          Osobně
         </li>
       </ul>
-      {variant === "online" ? <p>Před začátkem lekce Vám lektor zašle odkaz na platformu Google Meet.</p> : <GoogleMap place={place} setPlace={setPlace} />}
+      {variant === "Online" ? <p>Před začátkem lekce Vám lektor zašle odkaz na platformu Google Meet.</p> : <GoogleMap place={place} setPlace={setPlace} />}
     </>
   );
 }

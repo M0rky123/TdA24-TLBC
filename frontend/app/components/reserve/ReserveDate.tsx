@@ -41,7 +41,13 @@ export default function ReserveDate({
       {date !== null && (
         <ul className={style.list}>
           {hours.map((hour) => (
-            <li key={hour} className={style.item} onClick={() => setTime(hour.toString())}>
+            <li
+              key={hour}
+              className={`${style.item} ${time === hour.toString() ? style.activeItem : ""}`}
+              onClick={() => {
+                setTime(hour.toString());
+              }}
+            >
               {hour}
             </li>
           ))}

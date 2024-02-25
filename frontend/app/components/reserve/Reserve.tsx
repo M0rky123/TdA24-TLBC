@@ -20,17 +20,13 @@ export default function Reserve() {
   const [tel, setTel] = useState("");
   const [text, setText] = useState("");
 
-  const [variant, setVariant] = useState("online");
+  const [variant, setVariant] = useState("Online");
   const [place, setPlace] = useState("");
 
   const [date, setDate] = useState<Dayjs | null>(null);
   const [time, setTime] = useState("");
 
   const recap = [fName, lName, email, tel, text, variant, place, date, time];
-
-  useEffect(() => {
-    console.log(time);
-  }, [time]);
 
   const items = [
     <ReserveContact

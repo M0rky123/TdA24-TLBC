@@ -21,3 +21,8 @@
 .item:hover {
   transform: scale(1.05);
 }
+
+.activeItem {
+  color: var(--dark);
+  font-weight: 700;
+}
