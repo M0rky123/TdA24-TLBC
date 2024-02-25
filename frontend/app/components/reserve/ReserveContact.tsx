@@ -1,4 +1,4 @@
-import style from "../../styles/ReserveContact.module.css";
+import style from "../../styles/reserve/ReserveContact.module.css";
 
 export default function ReserveContact() {
   return (

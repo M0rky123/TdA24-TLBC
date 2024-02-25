@@ -14,13 +14,17 @@
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@mui/material": "^5.15.10",
+    "@react-google-maps/api": "^2.7.0",
+    "google-map-react": "^2.2.1",
     "ldrs": "^1.0.1",
     "next": "^14.1.0",
     "react": "^18",
     "react-dom": "^18",
-    "sharp": "^0.33.2"
+    "sharp": "^0.33.2",
+    "use-places-autocomplete": "^1.11.0"
   },
   "devDependencies": {
+    "@types/google-map-react": "^2.1.10",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

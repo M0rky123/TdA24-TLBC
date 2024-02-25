@@ -1,0 +1,19 @@
+.list {
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  background: none;
+  border-radius: 0.5rem;
+  box-shadow: var(--shadow);
+}
+
+.item {
+  padding: 0.75rem 1rem;
+  width: 100%;
+  cursor: pointer;
+}
+
+.activeItem {
+  font-weight: 600;
+  box-shadow: inset 2px 3px 4px #3333;
+}
