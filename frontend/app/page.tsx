@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import Button from "./components/Button";
 import Image from "next/image";
 import classroom from "./images/classroom.jpg";
-import style from "./styles/Home.module.css";
+import style from "./page.module.css";
 import { lalezar, openSans } from "./data/fonts";
 import WhyUsCards from "./components/WhyUsCards";
 

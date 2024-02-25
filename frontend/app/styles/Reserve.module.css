@@ -1,0 +1,38 @@
+.container {
+  width: 600px;
+  box-shadow: var(--shadow);
+  padding: 2rem;
+  border-radius: 0.5rem;
+}
+
+.list {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding-bottom: 1rem;
+}
+
+.activeItem {
+  flex: 0 0 auto;
+  width: max-content;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--dark);
+  cursor: pointer;
+}
+
+.item {
+  flex: 0 0 auto;
+  width: max-content;
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+}
+
+.item:hover,
+.item:focus {
+  transform: scale(1.01);
+  text-decoration: underline;
+}
