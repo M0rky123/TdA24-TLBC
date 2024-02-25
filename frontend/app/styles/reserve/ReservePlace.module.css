@@ -16,4 +16,5 @@
 .activeItem {
   font-weight: 600;
   box-shadow: inset 2px 3px 4px #3333;
+  border-radius: 0.5rem;
 }

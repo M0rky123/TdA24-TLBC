@@ -37,6 +37,7 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 input[type="number"] {
+  appearance: textfield;
   -moz-appearance: textfield;
 }
 
@@ -51,4 +52,8 @@ input[type="number"] {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--black);
+}
+
+.MuiDateCalendar-root.css-1q04gal-MuiDateCalendar-root {
+  margin: auto 0;
 }
