@@ -36,7 +36,7 @@ def generate_random_person():
         }
     return randomized_data
 
-url = "http://127.0.0.1:8080/api/lecturers"
+url = "/api/lecturers"
 
 headers = {
     "Content-Type": "application/json",

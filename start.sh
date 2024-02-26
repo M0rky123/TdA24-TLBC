@@ -1,17 +1,14 @@
 #!/bin/sh
 
-# Start the frontend build process
+# Start the frontend on a specific port
 cd frontend
-
-npm install
-npm run build 
+export FRONTEND_PORT=3000
 npm run start &
 
-# Move back to the backend directory
+# Start the backend on a different port
 cd ../backend
+python3 -m flask --app app/app.py init-db
+gunicorn --bind 0.0.0.0:5000 app.app:app &
 
-# Initialize the database in the background
-python3 -m flask --app app/app.py init-db &
-
-# Run Flask using Gunicorn in the foreground to keep the container alive
-gunicorn --bind 0.0.0.0:80 app.app:app &
+# Start Nginx in the foreground
+nginx -g 'daemon off;'

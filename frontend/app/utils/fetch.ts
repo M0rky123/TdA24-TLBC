@@ -15,7 +15,7 @@ async function fetchData(url: string, options = {}) {
 }
 
 export async function fetchFilter(tagsArray: string[], locationsArray: string[], priceArray: number[]) {
-  return fetchData("http://localhost:8080/api/lecturers/filter", {
+  return fetchData("/api/lecturers/filter", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -25,12 +25,12 @@ export async function fetchFilter(tagsArray: string[], locationsArray: string[],
 }
 
 export async function fetchLecturer(id: string) {
-  return fetchData(`http://localhost:8080/api/lecturers/${id}`, { cache: "no-store" });
+  return fetchData(`/api/lecturers/${id}`, { cache: "no-store" });
 }
 
 export async function fetchLecturerPack(page: number, limit: number) {
-  // return fetchData(`http://localhost:8080/api/lecturers/main/${page}`, {cache: "no-store"});
-  return fetchData(`http://localhost:8080/api/lecturers/main/${page}?limit=${limit}`, {
+  // return fetchData(`/api/lecturers/main/${page}`, {cache: "no-store"});
+  return fetchData(`/api/lecturers/main/${page}?limit=${limit}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -40,5 +40,5 @@ export async function fetchLecturerPack(page: number, limit: number) {
 }
 
 export async function getMetadata() {
-  return fetchData(`http://localhost:8080/api/lecturers/metadata`);
+  return fetchData(`/api/lecturers/metadata`);
 }
