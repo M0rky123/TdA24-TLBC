@@ -30,6 +30,7 @@ export default function Reserve() {
 
   const items = [
     <ReserveContact
+      key={Math.random()}
       fName={fName}
       setFName={setFName}
       lName={lName}
@@ -41,9 +42,9 @@ export default function Reserve() {
       text={text}
       setText={setText}
     />,
-    <ReservePlace variant={variant} setVariant={setVariant} place={place} setPlace={setPlace} />,
-    <ReserveDate date={date} setDate={setDate} time={time} setTime={setTime} />,
-    <ReserveRecap recap={recap} />,
+    <ReservePlace key={Math.random()} variant={variant} setVariant={setVariant} place={place} setPlace={setPlace} />,
+    <ReserveDate key={Math.random()} date={date} setDate={setDate} time={time} setTime={setTime} />,
+    <ReserveRecap key={Math.random()} recap={recap} />,
   ];
 
   return (

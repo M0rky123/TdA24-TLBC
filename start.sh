@@ -1,9 +1,8 @@
 #!/bin/sh
 
-
-
 # Start the frontend build process
-cd ./frontend
+cd frontend
+
 npm install
 npm run build 
 npm run start &
@@ -15,4 +14,4 @@ cd ../backend
 python3 -m flask --app app/app.py init-db &
 
 # Run Flask using Gunicorn in the foreground to keep the container alive
-gunicorn --bind 0.0.0.0:80 app.app:app 
+gunicorn --bind 0.0.0.0:80 app.app:app &

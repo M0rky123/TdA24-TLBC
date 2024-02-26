@@ -1,7 +1,7 @@
 "use client";
 
 import style from "../styles/Filtering.module.css";
-import { faAnglesDown, faCoins, faMagnifyingGlass, faMapPin, faTag } from "@fortawesome/free-solid-svg-icons";
+import { faAnglesDown, faCoins, faMapPin, faTag } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { openSans } from "../data/fonts";
@@ -25,12 +25,18 @@ export default function Filtering({ locArray, setLocArray, tagArray, setTagArray
   const minDistance = 1;
 
   useEffect(() => {
-    getMetadata().then((res) => {
-      setTags(res.existing_tags);
-      setLocations(res.location);
-      setPrice([res.min_max.min, res.min_max.max]);
-      setPriceArray([res.min_max.min, res.min_max.max]);
-    });
+    const fetchData = async () => {
+      try {
+        const res = await getMetadata();
+        setTags(res.existing_tags);
+        setLocations(res.location);
+        setPrice([res.min_max.min, res.min_max.max]);
+        setPriceArray([res.min_max.min, res.min_max.max]);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
   }, []);
 
   function modifyArray(item: string, array: string[], setArray: (array: string[]) => void) {

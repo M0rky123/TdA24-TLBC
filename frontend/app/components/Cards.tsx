@@ -6,8 +6,7 @@ import Card from "./Card";
 import style from "@/app/styles/Cards.module.css";
 import { openSans } from "../data/fonts";
 import BlankCard from "./BlankCard";
-import { quantum } from "ldrs";
-quantum.register();
+import Loader from "./Loader";
 
 interface CardsProps {
   page: number;
@@ -54,7 +53,7 @@ export default function Cards({ page, locArray, tagArray, priceArray }: CardsPro
         </p>
       ) : loading ? (
         <div style={{ margin: "0 auto", gridColumn: "1 / -1" }}>
-          <l-quantum size="45" speed="1.75" color="var(--black)" />
+          <Loader />
         </div>
       ) : (
         <>
