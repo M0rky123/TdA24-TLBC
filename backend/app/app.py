@@ -94,15 +94,15 @@ def updatelec(lector_id):
 async def getsixlec(offset):
     request_data = request.headers
     limit = request_data.get("limit")
-    # print(limit)
+    print(limit)
     page, status = get_page(page_number=offset, limit=int(limit))
-    # print(page)
+    print(page)
     return page, status
 
 @app.route('/api/lecturers/filter', methods=['POST'])
 async def find_filtered():
     request_data = request.json
-    # print(request_data)
+    print(request_data)
     loc = request_data.get("loc", None)
     tag = request_data.get("tag", None)
     min_max = request_data.get("min_max", None)
@@ -134,6 +134,8 @@ def auth():
         return jsonify({"status": "success"}), 200
     else:
         return jsonify({"status": "failed"}), 401
+
+@app.route("/api/reserve/<lector_id>", methods=["POST"])
 ########### Debug ###########
 
 @app.route('/api/admin', methods=['POST'])
