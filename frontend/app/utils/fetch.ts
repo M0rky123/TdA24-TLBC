@@ -25,7 +25,7 @@ export async function fetchFilter(tagsArray: string[], locationsArray: string[],
 }
 
 export async function fetchLecturer(id: string) {
-  return fetchData(`/api/lecturers/${id}`, { cache: "no-store" });
+  return fetchData(`/api/lecturers/${id}`);
 }
 
 export async function fetchLecturerPack(page: number, limit: number) {
