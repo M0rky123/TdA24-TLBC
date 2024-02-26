@@ -32,7 +32,9 @@ export default function ReserveContact({
             type="text"
             name="fName"
             id="fName"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFName(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setFName(e.target.value);
+            }}
             value={fName}
             className={style.input}
             autoComplete="on"

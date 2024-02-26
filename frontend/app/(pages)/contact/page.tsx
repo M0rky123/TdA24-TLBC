@@ -2,6 +2,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import style from "./page.module.css";
 import { lalezar, openSans } from "@/app/data/fonts";
 import { faAt, faMapPin, faSquarePhone } from "@fortawesome/free-solid-svg-icons";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Kontakt",
+};
 
 export default async function page() {
   return (

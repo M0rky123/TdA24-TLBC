@@ -9,7 +9,7 @@ import ReserveContact from "./ReserveContact";
 import ReservePlace from "./ReservePlace";
 import ReserveDate from "./ReserveDate";
 import ReserveRecap from "./ReserveRecap";
-import { Dayjs } from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 
 export default function Reserve() {
   const [page, setPage] = useState(0);
@@ -26,11 +26,9 @@ export default function Reserve() {
   const [date, setDate] = useState<Dayjs | null>(null);
   const [time, setTime] = useState("");
 
-  const recap = [fName, lName, email, tel, text, variant, place, date, time];
-
   const items = [
     <ReserveContact
-      key={Math.random()}
+      key={"reservationContact"}
       fName={fName}
       setFName={setFName}
       lName={lName}
@@ -42,9 +40,20 @@ export default function Reserve() {
       text={text}
       setText={setText}
     />,
-    <ReservePlace key={Math.random()} variant={variant} setVariant={setVariant} place={place} setPlace={setPlace} />,
-    <ReserveDate key={Math.random()} date={date} setDate={setDate} time={time} setTime={setTime} />,
-    <ReserveRecap key={Math.random()} recap={recap} />,
+    <ReservePlace key={"reservationPlace"} variant={variant} setVariant={setVariant} place={place} setPlace={setPlace} />,
+    <ReserveDate key={"reservationDate"} date={date} setDate={setDate} time={time} setTime={setTime} />,
+    <ReserveRecap
+      key={"reservationRecap"}
+      fName={fName}
+      lName={lName}
+      email={email}
+      tel={tel}
+      text={text}
+      variant={variant}
+      place={place}
+      date={date?.date() ? date : dayjs()}
+      time={time ? dayjs(time, "HH:mm") : dayjs()}
+    />,
   ];
 
   return (
@@ -56,7 +65,7 @@ export default function Reserve() {
           </li>
         ))}
       </ul>
-      {items[page]}
+      <div style={{ minHeight: "360px" }}>{items[page]}</div>
       <div className={style.btns}>
         <button className={style.btn} disabled={page === 0} onClick={() => setPage((p) => p - 1)}>
           <FontAwesomeIcon icon={faArrowCircleLeft} size="3x" color={`var(--${page === 0 ? "black" : "dark"})`} />

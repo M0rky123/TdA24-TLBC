@@ -13,21 +13,14 @@
 
 .container {
   display: flex;
-  flex-direction: column;
   gap: 2rem;
   color: var(--black);
-}
-
-.header {
-  height: 300px;
-  display: flex;
-  gap: 2rem;
 }
 
 .text {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 1rem;
   color: var(--black);
 }
 
@@ -46,7 +39,7 @@
 
 .info {
   display: flex;
-  justify-content: space-between;
+  gap: 2rem;
 }
 
 .priceLoc {
