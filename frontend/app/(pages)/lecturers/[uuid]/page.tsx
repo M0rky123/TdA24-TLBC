@@ -19,7 +19,7 @@ export default async function page({ params: { uuid } }: { params: { uuid: strin
     <div className={style.container + " " + openSans}>
       <div className={style.image}>
         <Image
-          src={lecturer.pricture_url ? lecturer.pricture_url : "https://picsum.photos/300"}
+          src={lecturer.picture_url ? lecturer.picture_url : "https://picsum.photos/300"}
           alt="foto lektora"
           width={300}
           height={300}
