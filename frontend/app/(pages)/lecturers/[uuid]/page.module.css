@@ -13,7 +13,8 @@
 
 .container {
   display: flex;
-  gap: 2rem;
+  gap: 3rem;
+  max-width: 1200px;
   color: var(--black);
 }
 

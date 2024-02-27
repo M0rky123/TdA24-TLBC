@@ -8,9 +8,9 @@ import Reserve from "@/app/components/reserve/Reserve";
 export default async function page({ params: { uuid } }: { params: { uuid: string } }) {
   return (
     <>
-      <h2 className={style.h2 + " " + lalezar}>Rezervace</h2>
       <div className={style.container + " " + openSans}>
         <section className={style.lecturer}>
+          <h2 className={style.h2 + " " + lalezar}>Rezervace</h2>
           <Image src="https://picsum.photos/300" alt="foto lektora" width={300} height={300} className={style.image} priority />
           <div className={style.info}>
             <span className={style.span}>

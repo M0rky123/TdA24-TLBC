@@ -2,8 +2,8 @@
   display: flex;
   gap: 8rem;
   height: 320px;
-  justify-content: space-between;
-  margin-bottom: 4rem;
+  justify-content: space-around;
+  margin-bottom: 8rem;
 }
 
 .wrapper {

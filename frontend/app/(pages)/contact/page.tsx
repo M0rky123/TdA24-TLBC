@@ -11,9 +11,9 @@ export const metadata: Metadata = {
 export default async function page() {
   return (
     <div>
-      <h1 className={style.h1 + " " + lalezar}>Kontakt</h1>
       <div className={style.content + " " + openSans}>
         <section className={style.info}>
+          <h1 className={style.h1 + " " + lalezar}>Kontakt</h1>
           <ul className={style.ul}>
             <li className={style.li}>
               <span className={style.span}>

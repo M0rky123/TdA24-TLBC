@@ -1,5 +1,3 @@
-import { headers } from "next/headers";
-
 async function fetchData(url: string, options = {}) {
   try {
     const response = await fetch(url, options);
@@ -15,7 +13,7 @@ async function fetchData(url: string, options = {}) {
 }
 
 export async function fetchFilter(tagsArray: string[], locationsArray: string[], priceArray: number[]) {
-  return fetchData("/api/lecturers/filter", {
+  return fetchData("http://localhost:8080/api/lecturers/filter", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -25,12 +23,12 @@ export async function fetchFilter(tagsArray: string[], locationsArray: string[],
 }
 
 export async function fetchLecturer(id: string) {
-  return fetchData(`/api/lecturers/${id}`);
+  return fetchData(`http://localhost:8080/api/lecturers/${id}`);
 }
 
 export async function fetchLecturerPack(page: number, limit: number) {
   // return fetchData(`http://localhost:8080/api/lecturers/main/${page}`, {cache: "no-store"});
-  return fetchData(`/api/lecturers/main/${page}?limit=${limit}`, {
+  return fetchData(`http://localhost:8080/api/lecturers/main/${page}?limit=${limit}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -40,5 +38,5 @@ export async function fetchLecturerPack(page: number, limit: number) {
 }
 
 export async function getMetadata() {
-  return fetchData(`/api/lecturers/metadata`);
+  return fetchData(`http://localhost:8080/api/lecturers/metadata`);
 }

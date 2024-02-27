@@ -1,13 +1,11 @@
 .h1 {
   color: var(--dark);
   font-size: 56px;
-  margin: 0 auto 2rem;
 }
 
 .content {
   display: flex;
-  justify-content: space-between;
-  gap: 2rem;
+  justify-content: space-around;
 }
 
 .info {
@@ -36,6 +34,7 @@
 .formContainer {
   max-width: 500px;
   padding: 1.5rem;
+  margin-top: 6rem;
   border-radius: 0.5rem;
   background: var(--white);
   box-shadow: 0 0 3px #3339;
