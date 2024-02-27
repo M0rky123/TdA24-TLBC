@@ -25,7 +25,9 @@ export async function fetchFilter(tagsArray: string[], locationsArray: string[],
 }
 
 export async function fetchLecturer(id: string) {
-  return fetchData(`/api/lecturers/${id}`);
+  return fetchData(`/api/lecturers/${id}`, {
+    method: "GET",
+  });
 }
 
 export async function fetchLecturerPack(page: number, limit: number) {

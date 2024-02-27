@@ -49,12 +49,10 @@ def api_verify(name, password):
         cursor = connection.cursor()
         cursor.execute("SELECT password FROM admins WHERE name = ?", (name,))
         hashed_password = cursor.fetchone()
-        print(hashed_password[0])
     success = bcrypt.checkpw(password.encode('utf-8'), hashed_password[0])
     return success
 
 def add_admin_to_db(name, password):
-    print(name, password)
     with sqlite3.connect(current_app.config['DATABASE']) as connection:
         cursor = connection.cursor()
         cursor.execute("INSERT INTO admins (name, password) VALUES (?, ?)", (name, password))

@@ -51,6 +51,23 @@ CREATE TABLE IF NOT EXISTS users (
     lector_id TEXT NOT NULL
 );"""
 
+CREATE_RESERVATION_TABLE = """
+CREATE TABLE IF NOT EXISTS reservations (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    lecturer_id TEXT NOT NULL,
+    client_name TEXT NOT NULL,
+    cleint_email TEXT NOT NULL,
+    client_phone TEXT NOT NULL,
+    date TEXT NOT NULL,
+    time TEXT NOT NULL,
+    online BOOLEAN NOT NULL,
+    address TEXT,
+    note TEXT,
+    responded BOOLEAN NOT NULL,
+    accepted BOOLEAN,
+    
+);"""
+
 INIT_DB_STATEMENTS = [CREATE_TAG_TABLE, CREATE_KANTORI_TABLE, CREATE_ADMIN_TABLE, CREATE_USER_TABLE]
 
 # DONE: Refactor the functions, make function names more continual, delete useless comments, add comments to the code that make sense, don't fuck up what works
@@ -240,7 +257,6 @@ def update(uuid, kantor_data):
                             updated_values['tags'] = str(tags)
                         elif key == 'contact':
                             if kantor_data[key]['telephone_numbers']:
-                                print(f"TEST {kantor_data[key]['telephone_numbers']}")
                                 updated_values['phone'] = str(kantor_data[key]['telephone_numbers'])
                             if kantor_data[key]['emails']:
                                 updated_values['email'] = str(kantor_data[key]['emails'])
@@ -323,9 +339,7 @@ def add_kantor(data):
         if isinstance(tag, dict):
             tag_name = tag.pop("name", None)
             if tag_name:
-                print(tag_name)
                 new_tag = add_tag(tag_name)
-                print(new_tag)
                 new_tags.append(new_tag)
     tags = new_tags
     data['tags'] = tags
@@ -350,13 +364,9 @@ def filter_kantor(filtered_tags=None, loc=None, min_max=None):
         select_query = "SELECT * FROM kantori WHERE "
         query_params = []
 
-        print(filtered_tags)
-        print(tag_names)
-
         if filtered_tags:
             select_query += "("
             for tag in filtered_tags:
-                print(tag)
                 if tag in tag_names:
                     tag_query = "tags LIKE ? AND "
                     select_query += f"{tag_query}"
@@ -380,9 +390,6 @@ def filter_kantor(filtered_tags=None, loc=None, min_max=None):
 
         if select_query.endswith(" AND "):
             select_query = select_query[:-5]
-
-        print(select_query)
-        print(query_params)
 
         query = cursor.execute(select_query, tuple(query_params))
         result = query.fetchall()

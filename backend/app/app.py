@@ -57,7 +57,8 @@ async def getalllec():
     return get_all()
     
 @app.route('/api/lecturers/<lector_id>', methods=['GET'])
-async def getlec(lector_id):
+def getlec(lector_id):
+    print("This was called!!!")
     data, status = get(lector_id)
     return data, status
 
@@ -94,15 +95,12 @@ def updatelec(lector_id):
 async def getsixlec(offset):
     request_data = request.headers
     limit = request_data.get("limit")
-    print(limit)
     page, status = get_page(page_number=offset, limit=int(limit))
-    print(page)
     return page, status
 
 @app.route('/api/lecturers/filter', methods=['POST'])
 async def find_filtered():
     request_data = request.json
-    print(request_data)
     loc = request_data.get("loc", None)
     tag = request_data.get("tag", None)
     min_max = request_data.get("min_max", None)
@@ -124,6 +122,9 @@ def misc():
     # return jsonify({"data": data, "count": count, "min_max": min_max, "location": location, "existing_tags": existing_tags})
     return jsonify({"count": count, "min_max": min_max, "location": location, "existing_tags": existing_tags})
 
+
+########### Soutěžní kolo ###########
+
 @app.route("/api/auth", methods=["POST"])
 def auth():
     data = request.json
@@ -136,6 +137,9 @@ def auth():
         return jsonify({"status": "failed"}), 401
 
 @app.route("/api/reserve/<lector_id>", methods=["POST"])
+def reserve(lector_id):
+    data = request.json
+
 ########### Debug ###########
 
 @app.route('/api/admin', methods=['POST'])
