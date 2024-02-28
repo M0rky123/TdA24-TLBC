@@ -2,7 +2,7 @@ import json
 from flask import Flask, make_response, render_template, request, jsonify
 from flask_cors import CORS
 from . import db
-from .db import add_kantor, filter_kantor, get_all_tags, get_count, get, get_all, delete, get_locations, make_reservation, price_min_max, update, get_page
+from .db import add_kantor, check_day, filter_kantor, get_all_tags, get_count, get, get_all, delete, get_locations, make_reservation, price_min_max, update, get_page
 from .utils import get_admin_login, get_user_login, password_hash, api_verify, add_admin_to_db, remove_admin_from_db, time_index
 
 app = Flask(__name__, static_folder="static")
@@ -152,7 +152,12 @@ def reserve(lector_id):
     message, status = make_reservation(lector_id, client_name, client_email, client_phone, date, time, index, online, place, note)
     return jsonify({"status": message}), status
 
-    
+
+app.route("/api/reserve/<lector_id>", methods=["GET"])
+def get_reservations(lector_id):
+    request_data = request.headers
+    date = request_data.get("date")
+    check_day(date)
 ########### Debug ###########
 
 @app.route('/api/admin', methods=['POST'])
