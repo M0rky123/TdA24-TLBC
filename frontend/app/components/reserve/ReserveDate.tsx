@@ -34,7 +34,6 @@ export default function ReserveDate({
             setLoading(true);
             setTimeout(() => setLoading(false), 500);
           }}
-          slo
           disablePast
           disabled={loading}
         />
