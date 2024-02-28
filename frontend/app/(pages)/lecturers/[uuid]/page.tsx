@@ -43,7 +43,7 @@ export default async function page({ params: { uuid } }: { params: { uuid: strin
             </span>
             <span className={style.span}>
               <FontAwesomeIcon icon={faCoins} className={style.icon} /> &nbsp;
-              {lecturer.price_per_hour}
+              {lecturer.price_per_hour} Kč/hod
             </span>
           </div>
           <div className={style.listContainer}>
