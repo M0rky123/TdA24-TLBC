@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-export function auth(token: string) {
+export function Auth(token: string) {
   const [value, setValue] = useState(token);
   useEffect(() => {
     const stored = localStorage.getItem("token");

@@ -138,26 +138,29 @@ def auth():
         return jsonify({"status": "failed"}), 401
 
 @app.route("/api/reserve/<lector_id>", methods=["POST"])
-def reserve(lector_id):
-    client_data = request.json
-    client_name = client_data.get('name')
-    client_email = client_data.get('email')
-    client_phone = client_data.get('phone')
-    date = client_data.get('date')
-    time = client_data.get('time')
+async def reserve(lector_id):
+    print(lector_id)
+    print(request)
+    data = request.json
+    client_name = data.get('name')
+    client_email = data.get('email')
+    client_phone = data.get('phone')
+    return(client_name)
+    """ date = data.get('date')
+    time = data.get('time')
     index = time_index(time)
-    online = client_data.get('online')
-    place = client_data.get('place', None)
-    note = client_data.get('note', None)
+    online = data.get('online')
+    place = data.get('place', None)
+    note = data.get('note', None)
     message, status = make_reservation(lector_id, client_name, client_email, client_phone, date, time, index, online, place, note)
-    return jsonify({"status": message}), status
+    return {"status": message}, status """
 
 
-app.route("/api/reserve/<lector_id>", methods=["GET"])
-def get_reservations(lector_id):
-    request_data = request.headers
-    date = request_data.get("date")
-    check_day(date)
+#@app.route("/api/reserve/<lector_id>", methods=["GET"])
+#def get_reservations(lector_id):
+#    request_data = request.headers
+#    date = request_data.get("date")
+#    check_day(lector_id, date)
 ########### Debug ###########
 
 @app.route('/api/admin', methods=['POST'])

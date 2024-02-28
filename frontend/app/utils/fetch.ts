@@ -51,7 +51,9 @@ export async function fetchReservation(
   return fetchData(`/api/reserve/${uuid}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, email, phone, date, time, online, place, note }),
+    body: JSON.stringify({ name: name, email: email, phone: phone, date: date, time: time, online: online, place: place, note: note }),
+
+    //body: JSON.stringify({ tag: tagsArray, loc: locationsArray, min_max: priceArray }),
   });
 }
 

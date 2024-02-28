@@ -9,13 +9,6 @@ import { useState } from "react";
 export default function Login() {
   const [showPass, setShowPass] = useState(false);
 
-  // on enter, submit form
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-    }
-  });
-
   return (
     <div className={style.container}>
       <h1 className={lalezar} style={{ color: "var(--dark)", lineHeight: "1", marginBottom: "1rem" }}>

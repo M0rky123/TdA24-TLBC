@@ -36,7 +36,7 @@ def generate_random_person():
         }
     return randomized_data
 
-url = "http://127.0.0.1:8080/api/lecturers"
+url = "http://127.0.0.1/api/lecturers"
 
 headers = {
     "Content-Type": "application/json",
@@ -44,7 +44,7 @@ headers = {
     "password": "d8Ef6!dGG_pv"
 }
 
-for i in range(30):
+for i in range(1):
     random_person = generate_random_person()
 
     # Make the POST request
