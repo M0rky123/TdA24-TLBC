@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAt, faMapPin, faSackDollar, faSquarePhone, faUser } from "@fortawesome/free-solid-svg-icons";
 import Reserve from "@/app/components/reserve/Reserve";
 import { fetchLecturer } from "@/app/utils/fetch";
-import { GetServerSideProps } from "next";
 
 export default async function page({ params: { uuid } }: { params: { uuid: string } }) {
   const lecturer = await fetchLecturer(uuid);
@@ -24,7 +23,7 @@ export default async function page({ params: { uuid } }: { params: { uuid: strin
           <Image src="https://picsum.photos/300" alt="foto lektora" width={300} height={300} className={style.image} priority />
           <div className={style.info}>
             <span className={style.span}>
-              <FontAwesomeIcon icon={faUser} className={style.icon} />{" "}
+              <FontAwesomeIcon icon={faUser} className={style.icon} />
               {lecturer.title_before + " " + lecturer.first_name + " " + lecturer.middle_name + " " + lecturer.last_name + " " + lecturer.title_after}
             </span>
             <span className={style.span}>

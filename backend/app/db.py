@@ -428,7 +428,8 @@ def filter_kantor(filtered_tags=None, loc=None, min_max=None):
             return {"message": "No Lecturers found"}
 
 def make_reservation(lecturer_id, client_name, client_email, client_phone, date, time, time_index, online, place, note, responded):
-    with sqlite3.connect(current_app.config['DATABASE']) as connection:
+    with sqlite3.connect(current_app.config['DATABASE']) as connection: 
+      pass
 
 # Some more setup magical shit ¯\_(ツ)_/¯
 
