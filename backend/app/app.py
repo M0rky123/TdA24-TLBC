@@ -124,6 +124,8 @@ def misc():
     # return jsonify({"data": data, "count": count, "min_max": min_max, "location": location, "existing_tags": existing_tags})
     return jsonify({"count": count, "min_max": min_max, "location": location, "existing_tags": existing_tags})
 
+
+########### Soutěžní kolo ###########
 @app.route("/api/auth", methods=["POST"])
 def auth():
     data = request.json
@@ -136,6 +138,19 @@ def auth():
         return jsonify({"status": "failed"}), 401
 
 @app.route("/api/reserve/<lector_id>", methods=["POST"])
+def reserve(lector_id):
+    client_data = request.json
+    client_name = client_data.get('name')
+    client_email = client_data.get('email')
+    client_phone = client_data.get('phone')
+    date = client_data.get('date')
+    time = client_data.get('time')
+    online = client_data.get('online')
+    place = client_data.get('place', None)
+    note = client_data.get('note', None)
+
+
+    
 ########### Debug ###########
 
 @app.route('/api/admin', methods=['POST'])

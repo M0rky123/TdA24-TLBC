@@ -51,7 +51,24 @@ CREATE TABLE IF NOT EXISTS users (
     lector_id TEXT NOT NULL
 );"""
 
-INIT_DB_STATEMENTS = [CREATE_TAG_TABLE, CREATE_KANTORI_TABLE, CREATE_ADMIN_TABLE, CREATE_USER_TABLE]
+CREATE_RESERVATION_TABLE = """
+CREATE TABLE IF NOT EXISTS reservations (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    lecturer_id TEXT NOT NULL,
+    client_name TEXT NOT NULL,
+    client_email TEXT NOT NULL,
+    client_phone TEXT NOT NULL,
+    date TEXT NOT NULL,
+    time TEXT NOT NULL,
+    time_index INTEGER NOT NULL,
+    online BOOLEAN NOT NULL,
+    place TEXT,
+    note TEXT,
+    responded BOOLEAN NOT NULL,
+    accepted BOOLEAN    
+    );"""
+
+INIT_DB_STATEMENTS = [CREATE_TAG_TABLE, CREATE_KANTORI_TABLE, CREATE_ADMIN_TABLE, CREATE_USER_TABLE, CREATE_RESERVATION_TABLE]
 
 # DONE: Refactor the functions, make function names more continual, delete useless comments, add comments to the code that make sense, don't fuck up what works
 
@@ -409,6 +426,9 @@ def filter_kantor(filtered_tags=None, loc=None, min_max=None):
             return result
         else:
             return {"message": "No Lecturers found"}
+
+def make_reservation(lecturer_id, client_name, client_email, client_phone, date, time, time_index, online, place, note, responded):
+    with sqlite3.connect(current_app.config['DATABASE']) as connection:
 
 # Some more setup magical shit ¯\_(ツ)_/¯
 
