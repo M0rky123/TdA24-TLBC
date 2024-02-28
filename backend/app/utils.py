@@ -65,3 +65,10 @@ def remove_admin_from_db():
         cursor = connection.cursor()
         cursor.execute("DELETE FROM admins where name = 'admin'")
         connection.commit()
+        
+def time_index(time):
+    hours, minutes = map(int, time.split(':'))
+
+    index = hours - 8
+
+    return index
