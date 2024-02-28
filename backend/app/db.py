@@ -427,9 +427,15 @@ def filter_kantor(filtered_tags=None, loc=None, min_max=None):
         else:
             return {"message": "No Lecturers found"}
 
-def make_reservation(lecturer_id, client_name, client_email, client_phone, date, time, time_index, online, place, note, responded):
-    with sqlite3.connect(current_app.config['DATABASE']) as connection:
-
+def make_reservation(lecturer_id, client_name, client_email, client_phone, date, time, time_index, online, place, note):
+    try: 
+        with sqlite3.connect(current_app.config['DATABASE']) as connection:
+            cursor = connection.cursor()
+            cursor.execute("INSERT INTO reservations (lecturer_id, client_name, client_email, client_phone, date, time, time_index, online, place, note) VALUES (?,?,?,?,?,?,?,?,?,?)", (lecturer_id, client_name, client_email, client_phone, date, time, time_index, online, place, note))
+            connection.commit()
+            return {"status": "success"}, 200
+    except Exception as e:
+        return {"error": str(e)}, 500
 # Some more setup magical shit ¯\_(ツ)_/¯
 
 @click.command('init-db')
