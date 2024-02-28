@@ -435,7 +435,21 @@ def make_reservation(lecturer_id, client_name, client_email, client_phone, date,
             connection.commit()
             return {"status": "success"}, 200
     except Exception as e:
-        return {"error": str(e)}, 500
+        return e, 500
+    
+def check_day(lecturer_id, date):
+    with sqlite3.connect(current_app.config['DATABASE']) as connection:
+        cursor = connection.cursor()
+        cursor.execute("SELECT time_index FROM reservations WHERE date=? AND WHERE lecturer_id=?", (date, lecturer_id))
+        data = cursor.fetchall()
+        index_list = []
+        if data: 
+            for i in data:
+                index_list.append(i[0])
+            return {"reserved_times": index_list}, 200
+        else:
+            return {"message": "No reservations for this day"}, 404
+        
 # Some more setup magical shit ¯\_(ツ)_/¯
 
 @click.command('init-db')
