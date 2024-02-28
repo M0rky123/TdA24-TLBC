@@ -37,6 +37,24 @@ export async function fetchLecturerPack(page: number, limit: number) {
   });
 }
 
+export async function fetchReservation(
+  uuid: string,
+  name: string,
+  email: string,
+  phone: string,
+  date: string,
+  time: string,
+  online: boolean,
+  place: string,
+  note: string
+) {
+  return fetchData(`/api/reserve/${uuid}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, email, phone, date, time, online, place, note }),
+  });
+}
+
 export async function getMetadata() {
   return fetchData(`http://localhost:8080/api/lecturers/metadata`);
 }

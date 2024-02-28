@@ -1,6 +1,6 @@
 import { DateCalendar, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { Dayjs } from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import "dayjs/locale/cs";
 import { useState } from "react";
 import style from "../../styles/reserve/ReserveDate.module.css";
@@ -13,8 +13,8 @@ export default function ReserveDate({
 }: {
   date: Dayjs | null;
   setDate: (date: Dayjs | null) => void;
-  time: string;
-  setTime: (time: string) => void;
+  time: Dayjs | null;
+  setTime: (time: Dayjs | null) => void;
 }) {
   const [loading, setLoading] = useState(false);
 
@@ -43,9 +43,9 @@ export default function ReserveDate({
           {hours.map((hour) => (
             <li
               key={hour}
-              className={`${style.item} ${time === hour.toString() ? style.activeItem : ""}`}
+              className={`${style.item} ${dayjs(time).hour() === parseInt(hour) ? style.activeItem : ""}`}
               onClick={() => {
-                setTime(hour.toString());
+                setTime(dayjs(hour, "HH:mm"));
               }}
             >
               {hour}

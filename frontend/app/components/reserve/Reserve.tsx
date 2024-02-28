@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import style from "../../styles/reserve/Reserve.module.css";
 import { reserve } from "@/app/data/reserve";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,9 +9,9 @@ import ReserveContact from "./ReserveContact";
 import ReservePlace from "./ReservePlace";
 import ReserveDate from "./ReserveDate";
 import ReserveRecap from "./ReserveRecap";
-import dayjs, { Dayjs } from "dayjs";
+import { Dayjs } from "dayjs";
 
-export default function Reserve() {
+export default function Reserve({ uuid }: { uuid: string }) {
   const [page, setPage] = useState(0);
 
   const [fName, setFName] = useState("");
@@ -20,11 +20,11 @@ export default function Reserve() {
   const [tel, setTel] = useState("");
   const [text, setText] = useState("");
 
-  const [variant, setVariant] = useState("Online");
+  const [online, setOnline] = useState<boolean>(true);
   const [place, setPlace] = useState("");
 
   const [date, setDate] = useState<Dayjs | null>(null);
-  const [time, setTime] = useState("");
+  const [time, setTime] = useState<Dayjs | null>(null);
 
   const items = [
     <ReserveContact
@@ -40,19 +40,20 @@ export default function Reserve() {
       text={text}
       setText={setText}
     />,
-    <ReservePlace key={"reservationPlace"} variant={variant} setVariant={setVariant} place={place} setPlace={setPlace} />,
+    <ReservePlace key={"reservationPlace"} online={online} setOnline={setOnline} place={place} setPlace={setPlace} />,
     <ReserveDate key={"reservationDate"} date={date} setDate={setDate} time={time} setTime={setTime} />,
     <ReserveRecap
       key={"reservationRecap"}
+      uuid={uuid}
       fName={fName}
       lName={lName}
       email={email}
       tel={tel}
       text={text}
-      variant={variant}
+      online={online}
       place={place}
-      date={date?.date() ? date : dayjs()}
-      time={time ? dayjs(time, "HH:mm") : dayjs()}
+      date={date}
+      time={time}
     />,
   ];
 

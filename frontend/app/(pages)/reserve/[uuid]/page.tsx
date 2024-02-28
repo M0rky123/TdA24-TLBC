@@ -54,7 +54,7 @@ export default async function page({ params: { uuid } }: { params: { uuid: strin
             </div>
           </div>
         </section>
-        <Reserve />
+        <Reserve uuid={uuid} />
       </div>
     </>
   );
