@@ -46,7 +46,7 @@ export default function ReserveDate({
             setLoading(true);
             const array = await fetch(`/api/reserve/${uuid}`, {
               method: "GET",
-              headers: { "Content-Type": "application/json", date: newDate.format("DD.MM.YYYY") },
+              headers: { "Content-Type": "application/json", date: dayjs(newDate).format("DD.MM.YYYY") },
             }).then((response) => response.json());
             setReserved(array);
             console.log(reserved);
