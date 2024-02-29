@@ -152,6 +152,12 @@ async def reserve(lector_id):
     message, status = make_reservation(lector_id, client_name, client_email, client_phone, date, time, index, online, place, note)
     return {"status": message}, status
 
+@app.route("/api/reserve/<lector_id>", methods=["GET"])
+async def get_reservations(lector_id):
+    request_data = request.headers
+    date = request_data.get("date")
+    message = check_day(lector_id, date)
+    return message, 200
 
 #@app.route("/api/reserve/<lector_id>", methods=["GET"])
 #def get_reservations(lector_id):
