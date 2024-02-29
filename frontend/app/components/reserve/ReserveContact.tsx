@@ -59,20 +59,20 @@ const ReserveContact: React.FC<Props> = ({ fName, setFName, lName, setLName, ema
       <div className={style.fullName}>
         <div className={style.field}>
           <label htmlFor="fName">Jméno</label>
-          <input type="text" name="fName" id="fName" onChange={handleFNameChange} value={fName} className={style.input} autoComplete="on" />
+          <input type="text" name="fName" id="fName" onChange={handleFNameChange} value={fName} className={style.input} autoComplete="given-name" />
         </div>
         <div className={style.field}>
           <label htmlFor="lName">Příjmení</label>
-          <input type="text" name="lName" id="lName" onChange={handleLNameChange} value={lName} className={style.input} autoComplete="on" />
+          <input type="text" name="lName" id="lName" onChange={handleLNameChange} value={lName} className={style.input} autoComplete="family-name" />
         </div>
       </div>
       <div className={style.field}>
         <label htmlFor="email">E-mail</label>
-        <input type="email" name="email" id="email" onChange={handleEmailChange} value={email} className={style.input} autoComplete="on" />
+        <input type="email" name="email" id="email" onChange={handleEmailChange} value={email} className={style.input} autoComplete="email" />
       </div>
       <div className={style.field}>
         <label htmlFor="tel">Telefonní číslo</label>
-        <input type="text" name="tel" id="tel" onChange={handleTelChange} onBlur={() => {}} value={tel} className={style.input} autoComplete="on" />
+        <input type="text" name="tel" id="tel" onChange={handleTelChange} onBlur={() => {}} value={tel} className={style.input} autoComplete="tel" />
       </div>
       <div className={style.field}>
         <label htmlFor="text">Zpráva</label>

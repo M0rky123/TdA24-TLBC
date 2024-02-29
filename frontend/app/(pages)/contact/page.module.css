@@ -1,6 +1,7 @@
 .h1 {
   color: var(--dark);
-  font-size: 56px;
+  font-size: 3rem;
+  line-height: 1;
 }
 
 .content {
@@ -34,7 +35,7 @@
 .formContainer {
   max-width: 500px;
   padding: 1.5rem;
-  margin-top: 6rem;
+  margin-top: 5rem;
   border-radius: 0.5rem;
   background: var(--white);
   box-shadow: 0 0 3px #3339;
