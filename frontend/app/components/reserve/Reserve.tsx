@@ -41,7 +41,7 @@ export default function Reserve({ uuid }: { uuid: string }) {
       setText={setText}
     />,
     <ReservePlace key={"reservationPlace"} online={online} setOnline={setOnline} place={place} setPlace={setPlace} />,
-    <ReserveDate key={"reservationDate"} date={date} setDate={setDate} time={time} setTime={setTime} />,
+    <ReserveDate key={"reservationDate"} uuid={uuid} date={date} setDate={setDate} time={time} setTime={setTime} />,
     <ReserveRecap
       key={"reservationRecap"}
       uuid={uuid}

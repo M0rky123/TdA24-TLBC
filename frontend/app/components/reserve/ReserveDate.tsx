@@ -6,11 +6,13 @@ import { useState } from "react";
 import style from "../../styles/reserve/ReserveDate.module.css";
 
 export default function ReserveDate({
+  uuid,
   date,
   setDate,
   time,
   setTime,
 }: {
+  uuid: string;
   date: Dayjs | null;
   setDate: (date: Dayjs | null) => void;
   time: Dayjs | null;
@@ -39,10 +41,16 @@ export default function ReserveDate({
       <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="cs">
         <DateCalendar
           value={date}
-          onChange={(newDate) => {
+          onChange={async (newDate) => {
             setDate(newDate);
             setLoading(true);
-            setTimeout(() => setLoading(false), 500);
+            const array = await fetch(`/api/reserve/${uuid}`, {
+              method: "GET",
+              headers: { "Content-Type": "application/json", date: newDate.format("DD.MM.YYYY") },
+            }).then((response) => response.json());
+            setReserved(array);
+            console.log(reserved);
+            setLoading(false);
           }}
           disablePast
           disabled={loading}
@@ -53,7 +61,7 @@ export default function ReserveDate({
           {hours.map((hour, index) => (
             <li
               key={hour}
-              className={`${style.item} ${dayjs(time).hour() === parseInt(hour) ? style.activeItem : ""} ${}`}
+              className={`${style.item} ${dayjs(time).hour() === parseInt(hour) ? style.activeItem : ""}`}
               onClick={() => {
                 setTime(dayjs(hour, "HH:mm"));
               }}
