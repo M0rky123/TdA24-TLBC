@@ -155,9 +155,10 @@ async def reserve(lector_id):
 @app.route("/api/reserve/<lector_id>", methods=["GET"])
 async def get_reservations(lector_id):
     request_data = request.headers
-    date = request_data.get("date")
+    date = request_data.get("Reserved-Day")
+    print(date)
     message = check_day(lector_id, date)
-    return message, 200
+    return jsonify(message), 200
 
 #@app.route("/api/reserve/<lector_id>", methods=["GET"])
 #def get_reservations(lector_id):
