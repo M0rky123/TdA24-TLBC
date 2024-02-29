@@ -439,7 +439,7 @@ def make_reservation(lecturer_id, client_name, client_email, client_phone, date,
 def check_day(lecturer_id, date):
     with sqlite3.connect(current_app.config['DATABASE']) as connection:
         cursor = connection.cursor()
-        cursor.execute("SELECT time_index FROM reservations WHERE date=? AND WHERE lecturer_id=?", (date, lecturer_id))
+        cursor.execute("SELECT time_index FROM reservations WHERE date=? AND lecturer_id=?", (date, lecturer_id))
         data = cursor.fetchall()
         index_list = []
         if data: 
