@@ -2,8 +2,8 @@ import json
 from flask import Flask, make_response, render_template, request, jsonify
 from flask_cors import CORS
 from . import db
-from .db import add_kantor, check_day, filter_kantor, get_all_tags, get_count, get, get_all, delete, get_locations, make_reservation, price_min_max, update, get_page
-from .utils import get_admin_login, get_user_login, password_hash, api_verify, add_admin_to_db, remove_admin_from_db, time_index
+from .db import add_kantor, check_day, filter_kantor, generate_ical, get_all_tags, get_count, get, get_all, delete, get_locations, make_reservation, price_min_max, update, get_page
+from .utils import get_admin_login, get_user_login, password_hash, api_verify, add_admin_to_db, remove_admin_from_db, time_index, user_verify
 
 app = Flask(__name__, static_folder="static")
 app.config['DATABASE'] = './app/data/lecture.db'
@@ -131,11 +131,22 @@ def auth():
     data = request.json
     name = data.get('name')
     password = data.get('password')
-    success = get_user_login(name, password)
+    success, lector_id, auth_key = get_user_login(name, password)
     if success:
-        return jsonify({"status": "success"}), 200
+        return jsonify({"lector_id": lector_id, "auth_key": auth_key}), 200
     else:
-        return jsonify({"status": "failed"}), 401
+        return jsonify({"status": "Wrong username or password"}), 401
+    
+@app.route("/api/auth/check", methods=["POST"])
+def check_auth():
+    data = request.json
+    lector_id = data.get('lector_id')
+    auth_key = data.get('auth_key')
+    success = user_verify(lector_id, auth_key)
+    if success:
+        return jsonify({"status": "OK"}), 200
+    else:
+        return jsonify({"status": "Unauthorized"}), 401
 
 @app.route("/api/reserve/<lector_id>", methods=["POST"])
 async def reserve(lector_id):
@@ -159,6 +170,24 @@ async def get_reservations(lector_id):
     print(date)
     message = check_day(lector_id, date)
     return jsonify(message), 200
+
+@app.route('/generate_ical', methods=['POST'])
+def download_ical():
+    request_data = request.json
+    lecturer_id = request_data.get('lecturer_id')
+    auth_token = request_data.get('auth_token')
+
+    ical_data, status_code = generate_ical(lecturer_id, auth_token)
+    
+    if status_code == 200:
+        response = make_response(ical_data)
+        response.headers['Content-Disposition'] = 'attachment; filename=reservations.ics'
+        response.headers['Content-Type'] = 'text/calendar'
+        return response
+    elif status_code == 204:
+        return "", 204  # No Content
+    else:
+        return {"error": "Unauthorized"}, 401
 
 #@app.route("/api/reserve/<lector_id>", methods=["GET"])
 #def get_reservations(lector_id):
