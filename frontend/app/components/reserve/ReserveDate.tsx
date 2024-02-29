@@ -37,17 +37,22 @@ export default function ReserveDate({
     "19:00 - 20:00",
   ];
 
+  async function handleClick(newDate: any) {
+    setDate(newDate);
+    setLoading(true);
+    const array = await fetchReservationGet(uuid, dayjs(newDate).format("DD.MM.YYYY"));
+    array[1] === 200 && setReserved(array[0]);
+
+    setLoading(false);
+  }
+
   return (
     <div className={style.container}>
       <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="cs">
         <DateCalendar
           value={date}
-          onChange={async (newDate) => {
-            setDate(newDate);
-            setLoading(true);
-            const array = await fetchReservationGet(uuid, dayjs(newDate).format("DD.MM.YYYY"));
-            setReserved(array);
-            setLoading(false);
+          onChange={(newDate) => {
+            handleClick(newDate);
           }}
           disablePast
           disabled={loading}

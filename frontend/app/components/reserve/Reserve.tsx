@@ -2,9 +2,6 @@
 
 import { useState } from "react";
 import style from "../../styles/reserve/Reserve.module.css";
-import { reserve } from "@/app/data/reserve";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowCircleLeft, faArrowCircleRight } from "@fortawesome/free-solid-svg-icons";
 import ReserveContact from "./ReserveContact";
 import ReservePlace from "./ReservePlace";
 import ReserveDate from "./ReserveDate";
@@ -12,6 +9,8 @@ import ReserveRecap from "./ReserveRecap";
 import { Dayjs } from "dayjs";
 
 export default function Reserve({ uuid }: { uuid: string }) {
+  const reserve = ["Datum a Čas", "Místo setkání", "Kontaktní údaje", "Rekapitulace"];
+
   const [page, setPage] = useState(0);
 
   const [fName, setFName] = useState("");
@@ -27,6 +26,8 @@ export default function Reserve({ uuid }: { uuid: string }) {
   const [time, setTime] = useState<Dayjs | null>(null);
 
   const items = [
+    <ReserveDate key={"reservationDate"} uuid={uuid} date={date} setDate={setDate} time={time} setTime={setTime} />,
+    <ReservePlace key={"reservationPlace"} online={online} setOnline={setOnline} place={place} setPlace={setPlace} />,
     <ReserveContact
       key={"reservationContact"}
       fName={fName}
@@ -40,8 +41,6 @@ export default function Reserve({ uuid }: { uuid: string }) {
       text={text}
       setText={setText}
     />,
-    <ReservePlace key={"reservationPlace"} online={online} setOnline={setOnline} place={place} setPlace={setPlace} />,
-    <ReserveDate key={"reservationDate"} uuid={uuid} date={date} setDate={setDate} time={time} setTime={setTime} />,
     <ReserveRecap
       key={"reservationRecap"}
       uuid={uuid}
@@ -67,14 +66,6 @@ export default function Reserve({ uuid }: { uuid: string }) {
         ))}
       </ul>
       <div style={{ minHeight: "360px" }}>{items[page]}</div>
-      <div className={style.btns}>
-        <button className={style.btn} disabled={page === 0} onClick={() => setPage((p) => p - 1)}>
-          <FontAwesomeIcon icon={faArrowCircleLeft} size="3x" color={`var(--${page === 0 ? "black" : "dark"})`} />
-        </button>
-        <button className={style.btn} disabled={page === 3} onClick={() => setPage((p) => p + 1)}>
-          <FontAwesomeIcon icon={faArrowCircleRight} size="3x" color={`var(--${page === 3 ? "black" : "dark"})`} />
-        </button>
-      </div>
     </div>
   );
 }
