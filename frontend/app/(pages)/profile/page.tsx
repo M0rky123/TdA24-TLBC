@@ -1,12 +1,16 @@
 "use client";
 
+import { useEffect } from "react";
 import style from "./page.module.css";
-import { Auth } from "@/app/components/Auth";
+import { LocalStorage } from "@/app/components/LocalStorage";
+import { fetchLecturer,fetchAuth } from "@/app/utils/fetch";
 
 export default function Profile() {
-  const [token, setToken, clear] = Auth("");
+  const [token, setToken] = LocalStorage("token", null);
+  const lecturer = fetchLecturer();
 
-  
+  useEffect(() => {}, []);
+
   return (
     <>
       <input
