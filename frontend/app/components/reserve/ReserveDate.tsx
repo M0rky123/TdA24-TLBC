@@ -17,12 +17,22 @@ export default function ReserveDate({
   setTime: (time: Dayjs | null) => void;
 }) {
   const [loading, setLoading] = useState(false);
+  const [reserved, setReserved] = useState<number[]>([]);
 
-  const hours = Array.from({ length: 20 - 8 }, (_, i) => {
-    const start = i + 8;
-    const end = i + 9;
-    return `${start.toString().padStart(2, "0")}:00 - ${end.toString().padStart(2, "0")}:00`;
-  });
+  const hours = [
+    "08:00 - 09:00",
+    "09:00 - 10:00",
+    "10:00 - 11:00",
+    "11:00 - 12:00",
+    "12:00 - 13:00",
+    "13:00 - 14:00",
+    "14:00 - 15:00",
+    "15:00 - 16:00",
+    "16:00 - 17:00",
+    "17:00 - 18:00",
+    "18:00 - 19:00",
+    "19:00 - 20:00",
+  ];
 
   return (
     <div className={style.container}>
@@ -40,10 +50,10 @@ export default function ReserveDate({
       </LocalizationProvider>
       {date !== null && (
         <ul className={style.list}>
-          {hours.map((hour) => (
+          {hours.map((hour, index) => (
             <li
               key={hour}
-              className={`${style.item} ${dayjs(time).hour() === parseInt(hour) ? style.activeItem : ""}`}
+              className={`${style.item} ${dayjs(time).hour() === parseInt(hour) ? style.activeItem : ""} ${}`}
               onClick={() => {
                 setTime(dayjs(hour, "HH:mm"));
               }}
