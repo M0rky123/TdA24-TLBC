@@ -4,6 +4,7 @@ import dayjs, { Dayjs } from "dayjs";
 import "dayjs/locale/cs";
 import { useState } from "react";
 import style from "../../styles/reserve/ReserveDate.module.css";
+import { fetchReservationGet } from "@/app/utils/fetch";
 
 export default function ReserveDate({
   uuid,
@@ -44,10 +45,7 @@ export default function ReserveDate({
           onChange={async (newDate) => {
             setDate(newDate);
             setLoading(true);
-            const array = await fetch(`/api/reserve/${uuid}`, {
-              method: "GET",
-              headers: { "Content-Type": "application/json", date: dayjs(newDate).format("DD.MM.YYYY") },
-            }).then((response) => response.json());
+            const array = await fetchReservationGet(uuid, dayjs(newDate).format("DD.MM.YYYY"));
             setReserved(array);
             setLoading(false);
           }}

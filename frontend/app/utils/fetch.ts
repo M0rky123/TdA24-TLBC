@@ -23,12 +23,12 @@ export async function fetchFilter(tagsArray: string[], locationsArray: string[],
 }
 
 export async function fetchLecturer(id: string) {
-  return fetchData(`http://localhost/api/lecturers/${id}`);
+  return fetchData(`http://localhost:8080/api/lecturers/${id}`);
 }
 
 export async function fetchLecturerPack(page: number, limit: number) {
   // return fetchData(`http://localhost:8080/api/lecturers/main/${page}`, {cache: "no-store"});
-  return fetchData(`/api/lecturers/main/${page}?limit=${limit}`, {
+  return fetchData(`http://localhost:8080/api/lecturers/main/${page}?limit=${limit}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -37,7 +37,14 @@ export async function fetchLecturerPack(page: number, limit: number) {
   });
 }
 
-export async function fetchReservation(
+export async function fetchReservationGet(uuid: string, date: string) {
+  return fetchData(`http://localhost:8080/api/reserve/${uuid}`, {
+    method: "GET",
+    headers: { "Content-Type": "application/json", "Reserved-Day": date },
+  });
+}
+
+export async function fetchReservationPost(
   uuid: string,
   name: string,
   email: string,
@@ -48,7 +55,7 @@ export async function fetchReservation(
   place: string,
   note: string
 ) {
-  return fetchData(`/api/reserve/${uuid}`, {
+  return fetchData(`http://localhost:8080/api/reserve/${uuid}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ name: name, email: email, phone: phone, date: date, time: time, online: online, place: place, note: note }),

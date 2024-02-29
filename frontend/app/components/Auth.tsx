@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 export function Auth(token: string) {
-  const [value, setValue] = useState(token);
+  const [value, setValue] = useState<string>(token);
   useEffect(() => {
     const stored = localStorage.getItem("token");
     setValue(stored ? JSON.parse(stored) : token);

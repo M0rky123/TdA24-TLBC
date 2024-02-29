@@ -1,6 +1,6 @@
 import dayjs, { Dayjs } from "dayjs";
 import style from "../../styles/reserve/ReserveRecap.module.css";
-import { fetchReservation } from "@/app/utils/fetch";
+import { fetchReservationPost } from "@/app/utils/fetch";
 
 interface RecapProps {
   uuid: string;
@@ -31,7 +31,7 @@ export default function ReserveRecap({ uuid, fName, lName, email, tel, text, onl
       </ul>
       <button
         onClick={() =>
-          fetchReservation(uuid, fName + " " + lName, email, tel, dayjs(date).format("DD.MM.YYYY"), dayjs(time).format("HH:mm"), online, place, text)
+          fetchReservationPost(uuid, fName + " " + lName, email, tel, dayjs(date).format("DD.MM.YYYY"), dayjs(time).format("HH:mm"), online, place, text)
         }
         className={style.btn}
       >
