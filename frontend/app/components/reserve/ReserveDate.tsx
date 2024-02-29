@@ -49,7 +49,6 @@ export default function ReserveDate({
               headers: { "Content-Type": "application/json", date: dayjs(newDate).format("DD.MM.YYYY") },
             }).then((response) => response.json());
             setReserved(array);
-            console.log(reserved);
             setLoading(false);
           }}
           disablePast
