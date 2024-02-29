@@ -139,21 +139,18 @@ def auth():
 
 @app.route("/api/reserve/<lector_id>", methods=["POST"])
 async def reserve(lector_id):
-    print(lector_id)
-    print(request)
     data = request.json
-    client_name = data.get('name')
-    client_email = data.get('email')
-    client_phone = data.get('phone')
-    return(client_name)
-    """ date = data.get('date')
-    time = data.get('time')
+    client_name = str(data.get('name'))
+    client_email = str(data.get('email'))
+    client_phone = str(data.get('phone'))
+    date = str(data.get('date'))
+    time = str(data.get('time'))
     index = time_index(time)
-    online = data.get('online')
+    online = str(data.get('online'))
     place = data.get('place', None)
     note = data.get('note', None)
     message, status = make_reservation(lector_id, client_name, client_email, client_phone, date, time, index, online, place, note)
-    return {"status": message}, status """
+    return {"status": message}, status
 
 
 #@app.route("/api/reserve/<lector_id>", methods=["GET"])

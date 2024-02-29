@@ -7,7 +7,7 @@ npm run start &
 
 # Start the backend on a different port
 cd ../backend
-python3 -m flask --app app/app.py init-db
+python3 -m flask --app app/app.py init-db &
 gunicorn --bind 0.0.0.0:5000 app.app:app &
 
 # Start Nginx in the foreground
