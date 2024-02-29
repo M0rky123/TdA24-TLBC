@@ -12,10 +12,21 @@ def get_user_login(name, password):
     else:
         with sqlite3.connect(current_app.config['DATABASE']) as connection:
             cursor = connection.cursor()
-            cursor.execute("SELECT password FROM users WHERE name = ?", (name,))
+            cursor.execute("SELECT * FROM users WHERE name = ?", (name,))
             hashed_password = cursor.fetchone()
-        success = bcrypt.checkpw(password.encode('utf-8'), hashed_password[0])
-        return success
+        success = bcrypt.checkpw(password.encode('utf-8'), hashed_password[2])
+        lector_id = hashed_password[4]
+        auth_key = hashed_password[3]
+        if success:
+            return success, lector_id, auth_key
+        
+def user_verify(lector_id, auth_key):
+    with sqlite3.connect(current_app.config['DATABASE']) as connection:
+        cursor = connection.cursor()
+        cursor.execute("SELECT auth_token FROM users WHERE lector_id = ?", (lector_id,))
+        auth_token = cursor.fetchone()
+    success = auth_key == auth_token[0]
+    return success
     
 def add_user_to_db(name, password, lector_id):
     if name == None and password == None and lector_id == None:
