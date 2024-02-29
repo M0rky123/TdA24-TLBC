@@ -33,7 +33,10 @@ export default function ReserveRecap({ uuid, fName, lName, email, tel, text, onl
         onClick={() =>
           fetchReservation(uuid, fName + " " + lName, email, tel, dayjs(date).format("DD.MM.YYYY"), dayjs(time).format("HH:mm"), online, place, text)
         }
-      ></button>
+        className={style.btn}
+      >
+        Odeslat
+      </button>
     </>
   );
 }

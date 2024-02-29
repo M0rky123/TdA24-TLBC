@@ -4,3 +4,22 @@
   flex-direction: column;
   gap: 0.25rem;
 }
+
+.btn {
+  width: 100%;
+  margin-top: 2rem;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  border: 0;
+  color: var(--white);
+  font-size: 1rem;
+  font-weight: 600;
+  background: var(--light);
+  display: grid;
+  cursor: pointer;
+}
+
+.btn:hover,
+.btn:focus {
+  background: var(--dark);
+}
