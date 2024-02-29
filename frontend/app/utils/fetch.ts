@@ -23,12 +23,12 @@ export async function fetchFilter(tagsArray: string[], locationsArray: string[],
 }
 
 export async function fetchLecturer(id: string) {
-  return fetchData(`http://localhost:8080/api/lecturers/${id}`);
+  return fetchData(`http://localhost/api/lecturers/${id}`);
 }
 
 export async function fetchLecturerPack(page: number, limit: number) {
   // return fetchData(`http://localhost:8080/api/lecturers/main/${page}`, {cache: "no-store"});
-  return fetchData(`http://localhost:8080/api/lecturers/main/${page}?limit=${limit}`, {
+  return fetchData(`/api/lecturers/main/${page}?limit=${limit}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
