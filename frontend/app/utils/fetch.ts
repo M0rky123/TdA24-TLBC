@@ -22,6 +22,16 @@ export async function fetchFilter(tagsArray: string[], locationsArray: string[],
   });
 }
 
+export async function fetchAuth(name: string, password: string) {
+  return fetchData("/api/auth", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ name: name, password: password }),
+  });
+}
+
 export async function fetchLecturer(id: string) {
   return fetchData(`http://localhost:8080/api/lecturers/${id}`);
 }
