@@ -16,7 +16,7 @@
 
 body {
   max-width: 1920px;
-  min-height: 100vh;
+  height: 100vh;
   box-shadow: 0 0 10px var(--black);
   margin: 0 auto;
   display: flex;
@@ -52,12 +52,4 @@ input[type="number"] {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--black);
-}
-
-.MuiDateCalendar-root.css-1q04gal-MuiDateCalendar-root {
-  margin: auto 0;
-}
-
-.MuiButtonBase-root.MuiPickersDay-root.Mui-selected.MuiPickersDay-dayWithMargin {
-  background: var(--dark);
 }

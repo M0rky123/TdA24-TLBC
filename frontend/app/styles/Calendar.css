@@ -1,0 +1,123 @@
+.container {
+  display: flex;
+  gap: 2rem;
+}
+
+.calendar {
+  background: var(--white);
+  box-shadow: var(--shadow);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  width: 300px;
+  height: 300px;
+  aspect-ratio: 1/1;
+  display: grid;
+  place-content: center;
+}
+
+.react-calendar {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.react-calendar__navigation {
+  display: flex;
+  justify-content: space-between;
+  height: 2rem;
+}
+
+.react-calendar__navigation__label__labelText {
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-transform: capitalize;
+  color: var(--dark);
+}
+.react-calendar__navigation__arrow {
+  height: 100%;
+  width: 2rem;
+  background: none;
+  border: 0;
+}
+.react-calendar__navigation__label {
+  background: none;
+  border: 0;
+}
+.react-calendar__month-view__weekdays {
+  text-align: center;
+  height: 24px;
+  margin: auto;
+}
+.react-calendar__month-view__weekdays__weekday abbr {
+  text-decoration: none;
+  text-transform: capitalize;
+}
+.react-calendar__tile {
+  position: relative;
+  aspect-ratio: 1/1;
+  background: var(--white);
+  border: 0;
+  border-radius: 50% 50% 8px 50%;
+  font-size: 1rem;
+}
+
+.span {
+  position: absolute;
+  bottom: 1px;
+  right: 3px;
+  font-size: 10px;
+}
+.react-calendar__tile--now {
+  background: var(--yellow);
+  color: var(--white);
+}
+
+.react-calendar__tile--active {
+  background: var(--dark);
+  color: var(--white);
+}
+
+button:hover:not(.react-calendar__navigation__label, :disabled) {
+  background: var(--light);
+  color: var(--white);
+  cursor: pointer;
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  list-style: none;
+  text-align: center;
+  margin: auto 0;
+}
+
+.item {
+  display: grid;
+  place-content: center;
+  background: var(--light);
+  border-radius: 0.25rem;
+}
+
+.item_button {
+  display: inline;
+  height: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 0;
+  border-radius: 0.25rem;
+  white-space: nowrap;
+  background: none;
+  color: var(--white);
+}
+
+.item:hover .item_button:not(:disabled) {
+  background: var(--dark);
+  cursor: pointer;
+}
+
+.item_button:disabled {
+  background: var(--black);
+  color: var(--white);
+  cursor: not-allowed;
+}

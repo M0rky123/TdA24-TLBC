@@ -23,7 +23,7 @@ export default function Reserve({ uuid }: { uuid: string }) {
   const [place, setPlace] = useState("");
 
   const [date, setDate] = useState<Dayjs | null>(null);
-  const [time, setTime] = useState<Dayjs | null>(null);
+  const [time, setTime] = useState<number | undefined>();
 
   const items = [
     <ReserveDate key={"reservationDate"} uuid={uuid} date={date} setDate={setDate} time={time} setTime={setTime} />,
@@ -65,7 +65,7 @@ export default function Reserve({ uuid }: { uuid: string }) {
           </li>
         ))}
       </ul>
-      <div style={{ minHeight: "360px" }}>{items[page]}</div>
+      <div>{items[page]}</div>
     </div>
   );
 }

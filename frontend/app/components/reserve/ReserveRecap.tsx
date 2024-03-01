@@ -12,7 +12,7 @@ interface RecapProps {
   online: boolean;
   place: string;
   date: Dayjs | null;
-  time: Dayjs | null;
+  time: number | undefined;
 }
 
 export default function ReserveRecap({ uuid, fName, lName, email, tel, text, online, place, date, time }: RecapProps) {
@@ -27,7 +27,7 @@ export default function ReserveRecap({ uuid, fName, lName, email, tel, text, onl
         <li>Typ: {online ? "Online" : "Osobně"}</li>
         <li>Místo: {place}</li>
         <li>Datum: {date ? dayjs(date).format("DD.MM.YYYY") : ""}</li>
-        <li>Čas: {time ? dayjs(time).format("HH:mm") + " - " + dayjs(time.add(1, "hour")).format("HH:mm") : ""}</li>
+        <li>Čas: {time ? `${time.toString().padStart(2, "0")}:00 - ${(time + 1).toString().padStart(2, "0")}:00 ` : ""}</li>
       </ul>
       <button
         onClick={() =>
