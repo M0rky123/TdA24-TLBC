@@ -49,6 +49,13 @@ def add_user_to_db(name, password, lector_id):
         log("success", "New lecturer login added to Database")
         return 200, {"success": "User added"}
     
+def lector_verify(lector_id, auth_token):
+    with sqlite3.connect(current_app.config['DATABASE']) as connection:
+        cursor = connection.cursor()
+        cursor.execute("SELECT auth_token FROM users WHERE lector_id = ?", (lector_id,))
+        token = cursor.fetchone()
+    success = token[0] == auth_token
+    return success
 
 #### ADMIN STUFF ####
 def get_admin_login(data):
