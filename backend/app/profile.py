@@ -1,5 +1,5 @@
 from flask import current_app
-import sqlite3
+import sqlite3, json
 from datetime import datetime, timedelta
 import uuid as uuidgen
 from .utils import user_verify
@@ -34,5 +34,32 @@ def generate_ical(lecturer_id, auth_token):
                 return "", 204 
     else:
         return {"message": "Unauthorized"}, 401
+    
+
+def lecturer_reservations(lecturer_id):
+    with sqlite3.connect(current_app.config['DATABASE']) as connection:
+        cursor = connection.cursor()
+        cursor.execute("SELECT * FROM reservations WHERE lecturer_id=?", (lecturer_id,))
+        data = cursor.fetchall()
+        reservations_list = []
+        for reservation in data:
+            reservation_dict = {
+                "reservation_id": reservation[1],  # Assuming reservation_id is in the first column
+                "lecturer_id": reservation[2],  # Assuming lecturer_id is in the first column
+                "client_name": reservation[3],
+                "client_email": reservation[4],
+                "client_phone": reservation[5],
+                "date": reservation[6],
+                "time_index": reservation[8],
+                "online": reservation[9],
+                "place": reservation[10],
+                "note": reservation[11],
+                "responded": reservation[12],
+                "accepted": reservation[13]
+            }
+            reservations_list.append(reservation_dict)
+        
+        reservations_json = {"reservations": reservations_list}
+        return json.dumps(reservations_json, indent=4)
     
 

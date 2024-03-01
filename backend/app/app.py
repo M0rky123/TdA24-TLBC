@@ -5,7 +5,7 @@ from . import db
 from .db import add_kantor, filter_kantor, get_all_tags, get_count, get, get_all, delete, get_locations, price_min_max, update, get_page
 from .utils import get_admin_login, get_user_login, password_hash, api_verify, add_admin_to_db, remove_admin_from_db, time_index, user_verify
 from .reservations import check_day, make_reservation
-from .profile import generate_ical
+from .profile import generate_ical, lecturer_reservations
 
 app = Flask(__name__, static_folder="static")
 app.config['DATABASE'] = './app/data/lecture.db'
@@ -181,12 +181,12 @@ def download_ical():
         return "", 204  # No Content
     else:
         return {"error": "Unauthorized"}, 401
+    
+@app.route('/api/lecturers/<lector_id>/reservations', methods=['GET'])
+def get_lecturer_reservations(lector_id):
+    message = lecturer_reservations(lector_id)
+    return message, 200
 
-#@app.route("/api/reserve/<lector_id>", methods=["GET"])
-#def get_reservations(lector_id):
-#    request_data = request.headers
-#    date = request_data.get("date")
-#    check_day(lector_id, date)
 ########### Debug ###########
 
 @app.route('/api/admin', methods=['POST'])
@@ -207,6 +207,8 @@ def delete_admin():
 def test_admin():
     data = get_admin_login(request.headers)
     return jsonify({"status": data})
+
+
 
 ########### FrontEnd ###########
 
