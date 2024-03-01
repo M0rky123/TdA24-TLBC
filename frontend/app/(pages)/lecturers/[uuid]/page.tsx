@@ -6,8 +6,8 @@ import Button from "@/app/components/Button";
 import { lalezar, openSans } from "@/app/data/fonts";
 import { faAt, faCoins, faMapPin, faSquarePhone, faTag } from "@fortawesome/free-solid-svg-icons";
 
-export default async function page({ params: { uuid } }: { params: { uuid: string } }) {
-  const lecturer = await fetchLecturer(uuid);
+export default async function Page({ params }: { params: { uuid: string } }) {
+  const lecturer = await fetchLecturer(params.uuid);
 
   for (let key in lecturer) {
     if (lecturer[key] === null) {
@@ -26,7 +26,7 @@ export default async function page({ params: { uuid } }: { params: { uuid: strin
           style={{ borderRadius: "1rem" }}
         />
         <div style={{ width: "300px", display: "flex", alignItems: "center" }}>
-          <Button text="Rezervovat" url={"/reserve/" + uuid} width="100%" active />
+          <Button text="Rezervovat" url={"/reserve/" + params.uuid} width="100%" active />
         </div>
       </div>
       <div className={style.text}>

@@ -14,7 +14,6 @@ app.json.sort_keys = False
 
 CORS(app)
 
-
 db.init_app(app)
 
 ######## Fáze 1 ########

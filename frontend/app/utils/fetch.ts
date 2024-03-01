@@ -1,7 +1,7 @@
 async function fetchData(url: string, options = {}) {
   try {
-     const response = await fetch(url, options);
-    //const response = await fetch("http://localhost:8080" + url, options);
+    //  const response = await fetch(url, options);
+    const response = await fetch("http://localhost:8080" + url, options);
 
     if (!response.ok) {
       // throw page not found error
@@ -47,6 +47,10 @@ export async function editLecturer(
       contact: contact,
     }),
   });
+}
+
+export async function fetchReservations(uuid: string) {
+  return fetchData(`/api/lecturers/${uuid}/reservations`, { method: "GET", headers: { "Content-Type": "application/json" } });
 }
 
 export async function fetchFreeReservationHours(uuid: string, month?: string, year?: string) {
