@@ -14,19 +14,29 @@ export default function Login() {
 
   const route = useRouter();
 
-  // async function handleLogin(username: string, password: string) {
-  //   const res = await fetch("http://localhost:8080/api/auth", {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify({ name: username, password: password }),
-  //   })
-  //     .then((res) => res.json())
-  //     .then((res) => console.log(res));
-  // }
-
-  const handleLogin = (username: string, password: string) => {
-    route.push("/profile?uuid=6dee7e9a-7548-4ab4-863d-d8b5ad20bf28");
-  };
+  async function handleLogin(username: string, password: string) {
+    await fetch("http://localhost:8080/api/auth", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: username, password: password }),
+    }).then((res) => {
+      if (res.ok) {
+        res.json().then((res) => {
+          sessionStorage.setItem("auth_key", res.auth_key);
+          sessionStorage.setItem("lector_id", res.lector_id);
+          route.push("/profile");
+        });
+      } else {
+        // throw new Error("There was a problem with the fetch operation");
+        res.json().then((res) => {
+          if (res.status == "name") alert("Zadané lektorské jméno neexistuje!");
+          else if (res.status == "pass") alert("Hesla se neschodují!");
+          else alert("Něco se pokazilo!");
+        });
+      }
+    });
+    // .then((res) => route.push("/profile?uuid=6dee7e9a-7548-4ab4-863d-d8b5ad20bf28"));
+  }
 
   return (
     <div className={style.container}>

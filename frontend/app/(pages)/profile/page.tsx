@@ -7,13 +7,14 @@ import { fetchLecturer } from "@/app/utils/fetch";
 import { useSearchParams } from "next/navigation";
 
 export default function Profile() {
-  const [token, setToken] = LocalStorage("token", null);
+  const auth_key = sessionStorage.getItem("auth_key")!;
+  const auth_uuid = sessionStorage.getItem("lector_id")!;
 
   const uuid: string = useSearchParams().get("uuid")!;
 
   useEffect(() => {
     async function lec() {
-      await fetchLecturer(uuid).then((res) => console.log(res));
+      await fetchLecturer(auth_uuid).then((res) => console.log(res));
     }
     lec();
   }, []);
