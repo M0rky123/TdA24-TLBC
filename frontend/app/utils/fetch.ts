@@ -70,6 +70,16 @@ export async function fetchFilter(tagsArray: string[], locationsArray: string[],
   });
 }
 
+export async function putReservation(reservation_id: string, reaction: boolean, lector_id: string, auth_token: string) {
+  return fetchData(`/api/reservations/${reservation_id}/react`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ reaction: reaction, lector_id: lector_id, auth_token: auth_token }),
+  });
+}
+
 export async function fetchLecturer(id: string) {
   return fetchData(`/api/lecturers/${id}`);
 }

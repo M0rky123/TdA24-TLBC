@@ -10,7 +10,7 @@ export default function Profile() {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    
+    const auth_uuid = sessionStorage.getItem("lector_id")!;
     async function lec() {
       const auth_key = sessionStorage.getItem("auth_key")!;
       const auth_uuid = sessionStorage.getItem("lector_id")!;
