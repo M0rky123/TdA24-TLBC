@@ -5,18 +5,24 @@ import style from "./page.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
-import { fetchAuth } from "@/app/utils/fetch";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
   const [showPass, setShowPass] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const route = useRouter();
+
   async function handleLogin(username: string, password: string) {
-    const response = await fetchAuth(username, password);
-    if (response) {
-      
-      window.location.href = "/profile";
+    const res = await fetch("http://localhost:8080/api/auth", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: username, password: password }),
+    });
+    console.log(res.json());
+    if (res.status === 200) {
+      // route.push("/profile?uuid={}");
     } else {
       alert("Nesprávné jméno nebo heslo");
     }
@@ -47,7 +53,7 @@ export default function Login() {
           </button>
         </div>
         <button
-          type="submit"
+          type="button"
           className={style.button}
           onKeyDown={(key) => {
             if (key.key == "Enter") {
