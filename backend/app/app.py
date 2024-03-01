@@ -3,9 +3,10 @@ from flask import Flask, make_response, render_template, request, jsonify
 from flask_cors import CORS, cross_origin
 from . import db
 from .db import add_kantor, filter_kantor, get_all_tags, get_count, get, get_all, delete, get_locations, price_min_max, update, get_page
-from .utils import get_admin_login, get_user_login, password_hash, api_verify, add_admin_to_db, remove_admin_from_db, time_index, user_verify
+from .utils import get_admin_login, get_user_login, password_hash, api_verify, add_admin_to_db, remove_admin_from_db, time_index, user_verify, dc_log
 from .reservations import check_day, check_month, make_reservation
 from .profile import generate_ical, lecturer_reservations
+from .logs import log
 
 app = Flask(__name__, static_folder="static")
 app.config['DATABASE'] = './app/data/lecture.db'
@@ -21,6 +22,7 @@ db.init_app(app)
 #@app.route('/')
 #def hello_world():
 #    return "Hello TdA"
+
 
 @app.route('/api')
 def api():
@@ -41,9 +43,10 @@ def validate_required_fields(data):
 
 @app.route('/api/lecturers', methods=['POST'] )
 async def createlec():
+    log("info", "Request for creating new lecturer.")
     data = request.json
     success = get_admin_login(request.headers)
-    
+    log("info", "API request authorized.")
     if success:
         if not validate_required_fields(data):
             return jsonify({"error": "Missing required fields"}), 400
@@ -97,15 +100,12 @@ def updatelec(lector_id):
 async def getsixlec(offset):
     request_data = request.headers
     limit = request_data.get("limit")
-    print(limit)
     page, status = get_page(page_number=offset, limit=int(limit))
-    print(page)
     return page, status
 
 @app.route('/api/lecturers/filter', methods=['POST'])
 async def find_filtered():
     request_data = request.json
-    print(request_data)
     loc = request_data.get("loc", None)
     tag = request_data.get("tag", None)
     min_max = request_data.get("min_max", None)
@@ -156,13 +156,13 @@ def check_auth():
 async def reserve(lector_id):
     data = request.json
     message, status = make_reservation(data, lector_id)
+    print(message)
     return {"status": message}, status
 
 @app.route("/api/reserve/<lector_id>", methods=["GET"])
 async def get_reservations(lector_id):
     request_data = request.headers
     date = request_data.get("Reserved-Day")
-    print(date)
     message = check_day(lector_id, date)
     return jsonify(message), 200
 
@@ -187,12 +187,14 @@ def download_ical():
 @app.route('/api/lecturers/<lector_id>/reservations', methods=['GET'])
 def get_lecturer_reservations(lector_id):
     message = lecturer_reservations(lector_id)
-    return message, 200
+    return jsonify(message), 200
 
 @app.route("/api/reservations/<lector_id>", methods=["GET"])
 def get_reservations_by_month(lector_id):
-    message, status = check_month(lector_id, "05", "2024")
-    print(type(message))
+    data = request.headers
+    month = data.get("month")
+    year = data.get("year") 
+    message, status = check_month(lector_id, month, year)
     return message, status
 
 ########### Debug ###########
@@ -215,37 +217,6 @@ def delete_admin():
 def test_admin():
     data = get_admin_login(request.headers)
     return jsonify({"status": data})
-
-
-
-########### FrontEnd ###########
-
-""" @app.route('/', methods=['GET'])
-def main():
-    data = get_all()
-    count = get_count()
-    min_max = price_min_max()
-    location = get_locations()
-    existing_tags = get_all_tags()
-    print(json.dumps(existing_tags))
-    return render_template("index.html", data = data, count = count, min_max = min_max, existing_tags = existing_tags, location = location)
- """
-""" @app.route('/lecturer')
-def lecturer():
-    with open("./app/data/lecturer.json", "r") as file:
-        data = json.load(file)
-
-    return render_template("lecturer.html", lecturer=data) """
-
-
-@app.route('/lecturer/<lector_id>', methods=['GET'])
-def showlec(lector_id):
-    data, status = get(lector_id)
-    if status == 200: 
-        return render_template("lecturer.html", lecturer=data)
-    else: 
-        return render_template("404.html", lecturer=lector_id)
-
 
 if __name__ == '__main__':
     app.run()

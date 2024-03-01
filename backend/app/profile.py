@@ -1,4 +1,4 @@
-from flask import current_app
+from flask import current_app, jsonify
 import sqlite3, json
 from datetime import datetime, timedelta
 import uuid as uuidgen
@@ -41,25 +41,33 @@ def lecturer_reservations(lecturer_id):
         cursor = connection.cursor()
         cursor.execute("SELECT * FROM reservations WHERE lecturer_id=?", (lecturer_id,))
         data = cursor.fetchall()
-        reservations_list = []
+        unread = []
+        accepted = []
+        declined = []
         for reservation in data:
-            reservation_dict = {
-                "reservation_id": reservation[1],  # Assuming reservation_id is in the first column
-                "lecturer_id": reservation[2],  # Assuming lecturer_id is in the first column
-                "client_name": reservation[3],
-                "client_email": reservation[4],
-                "client_phone": reservation[5],
-                "date": reservation[6],
-                "time_index": reservation[8],
-                "online": reservation[9],
-                "place": reservation[10],
-                "note": reservation[11],
-                "responded": reservation[12],
-                "accepted": reservation[13]
+            reservation_data = {
+                    "reservation_id": reservation[1], 
+                    "lecturer_id": reservation[2],  # Assuming lecturer_id is in the first column
+                    "client_name": reservation[3],
+                    "client_email": reservation[4],
+                    "client_phone": reservation[5],
+                    "date": reservation[6],
+                    "time_index": reservation[8],
+                    "online": reservation[9],
+                    "place": reservation[10],
+                    "note": reservation[11],
+                    "responded": reservation[12],
+                    "accepted": reservation[13]
             }
-            reservations_list.append(reservation_dict)
-        
-        reservations_json = {"reservations": reservations_list}
-        return json.dumps(reservations_json, indent=4)
+            if reservation[12] == False:
+                unread.append(reservation_data)
+            elif reservation[13] == True:
+                accepted.append(reservation_data)
+            else:
+                declined.append(reservation_data)
+
+            
+        reservations_json = {"unread": unread, "accepted": accepted, "declined": declined}
+        return reservations_json
     
 

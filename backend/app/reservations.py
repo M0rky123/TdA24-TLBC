@@ -6,14 +6,15 @@ from .email import reserve_confirm
 from .utils import time_index
 
 def make_reservation(data, lecturer_id):
-    client_name = str(data.get('name'))
-    client_email = str(data.get('email'))
-    client_phone = str(data.get('phone'))
-    date = str(data.get('date'))
-    time = str(data.get('time'))
+    print(data)
+    client_name = data.get('name')
+    client_email = data.get('email')
+    client_phone = data.get('phone')
+    date = data.get('date')
+    time = data.get('time')
     index = time_index(time)
     reservation_id = str(uuidgen.uuid4())
-    online = str(data.get('online'))
+    online = data.get('online')
     place = data.get('place', None)
     note = data.get('note', None)
 
@@ -25,12 +26,16 @@ def make_reservation(data, lecturer_id):
             cursor.execute("SELECT first_name, middle_name, last_name, phone FROM lecturers WHERE uuid=?", (lecturer_id,))
             lecturer_data = cursor.fetchone()
 
-        lecturer_name = lecturer_data[0] + " " + lecturer_data[1] + " " + lecturer_data[2]
+        if lecturer_data[1] is not None:
+            lecturer_name = lecturer_data[0] + " " + lecturer_data[1] + " " + lecturer_data[2]
+        else:
+            lecturer_name = lecturer_data[0] + " " + lecturer_data[2]
+
         lecturer_all_phone = eval(lecturer_data[3])
         lecturer_phone = lecturer_all_phone[0]
         if online:
             place = "Online"
-        reserve_confirm(client_email, lecturer_name, date, time, lecturer_phone, place)
+        #reserve_confirm(client_email, lecturer_name, date, time, lecturer_phone, place)
         return "Success", 200
     except Exception as e:
         return str(e), 400
