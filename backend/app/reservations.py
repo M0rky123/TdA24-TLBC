@@ -55,11 +55,20 @@ def check_day(lecturer_id, date):
             return {"message": "No reservations for this day"}, 404
         
 def check_month(lecturer_id, month, year):
+    print(f"01.{month}.{year}", f"31.{month}.{year}")
+    month = int(month)
+    year = int(year)
+
+
     with sqlite3.connect(current_app.config['DATABASE']) as connection:
         cursor = connection.cursor()
-        cursor.execute("SELECT date, COUNT(*) FROM reservations WHERE date BETWEEN ? AND ? AND lecturer_id = ? GROUP BY date", (f"01.{month}.{year}", f"31.{month}.{year}", lecturer_id))
+        #cursor.execute("SELECT date, COUNT(*) FROM reservations WHERE date BETWEEN ? AND ? AND lecturer_id = ? GROUP BY date", (start, end, lecturer_id))
+        cursor.execute("SELECT date, COUNT(*) FROM reservations WHERE substr(date, 4, 2) = ? AND substr(date, 7, 4) = ? AND lecturer_id = ? GROUP BY date", (f"{month:02d}", f"{year}", lecturer_id))
         data = cursor.fetchall()
-        if data:
+        print(data)
+        if data == []:
+            return {"message": "No reservations for this month"}, 404
+        else:
             month_reservations = [{"date": datetime.strptime(row[0], "%d.%m.%Y").day, "count": 12 - int(row[1])} for row in data]
             print(month_reservations)
             return month_reservations, 200

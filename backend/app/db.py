@@ -293,6 +293,13 @@ def update(uuid, kantor_data):
             return jsonify(data), 200
         else:
             return {"status": "not found"}, 404
+        
+def update_reservation(reservation_id, data):
+    with sqlite3.connect(current_app.config['DATABASE']) as connection:
+        cursor = connection.cursor()
+        cursor.execute("UPDATE reservations SET responded = ?, accepted = ? WHERE reservation_id = ?", (True, data, reservation_id))
+        connection.commit()
+        return {"status": "updated"}, 200
 
 def delete(uuid):
     with sqlite3.connect(current_app.config['DATABASE']) as connection:

@@ -2,8 +2,8 @@ import json
 from flask import Flask, make_response, render_template, request, jsonify
 from flask_cors import CORS, cross_origin
 from . import db
-from .db import add_kantor, filter_kantor, get_all_tags, get_count, get, get_all, delete, get_locations, price_min_max, update, get_page
-from .utils import get_admin_login, get_user_login, password_hash, api_verify, add_admin_to_db, remove_admin_from_db, time_index, user_verify, dc_log
+from .db import add_kantor, filter_kantor, get_all_tags, get_count, get, get_all, delete, get_locations, price_min_max, update, get_page, update_reservation
+from .utils import get_admin_login, get_user_login, lector_verify, password_hash, api_verify, add_admin_to_db, remove_admin_from_db, time_index, user_verify, dc_log
 from .reservations import check_day, check_month, make_reservation
 from .profile import generate_ical, lecturer_reservations
 from .logs import log
@@ -191,22 +191,27 @@ def get_lecturer_reservations(lector_id):
 @app.route("/api/reservations/<lector_id>", methods=["GET"])
 def get_reservations_by_month(lector_id):
     data = request.headers
-    month = data.get("month")
-    year = data.get("year") 
+    month = data.get("Month")
+    year = data.get("Year") 
+    print(month)
+    print(type(month))
+    print(year)
+    print(type(year))
     message, status = check_month(lector_id, month, year)
     return message, status
 
 @app.route("/api/reservations/<reservation_id>/react", methods=["PUT"])
 def react_to_reservation(reservation_id):
-    
     data = request.json
     reaction = data.get('reaction')
-    if reaction == "accept":
-        return jsonify({"status": "accepted"}), 200
-    elif reaction == "decline":
-        return jsonify({"status": "declined"}), 200
-    else:
-        return jsonify({"status": "invalid"}), 400
+    lecturer_id = data.get("lector_id")
+    auth_token = data.get("auth_token")
+    auth = lector_verify(lecturer_id, auth_token)
+    if auth:
+        message, status = update_reservation(reservation_id, reaction)
+        return message, status
+
+
 
 ########### Debug ###########
 
