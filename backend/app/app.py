@@ -196,6 +196,18 @@ def get_reservations_by_month(lector_id):
     message, status = check_month(lector_id, month, year)
     return message, status
 
+@app.route("/api/reservations/<reservation_id>/react", methods=["PUT"])
+def react_to_reservation(reservation_id):
+    
+    data = request.json
+    reaction = data.get('reaction')
+    if reaction == "accept":
+        return jsonify({"status": "accepted"}), 200
+    elif reaction == "decline":
+        return jsonify({"status": "declined"}), 200
+    else:
+        return jsonify({"status": "invalid"}), 400
+
 ########### Debug ###########
 
 @app.route('/api/admin', methods=['POST'])
