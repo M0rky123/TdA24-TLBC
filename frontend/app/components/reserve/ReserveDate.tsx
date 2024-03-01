@@ -1,12 +1,12 @@
 import dayjs, { Dayjs } from "dayjs";
 import "dayjs/locale/cs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import "../../styles/Calendar.css";
 import { openSans } from "../../data/fonts";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
-import { fetchReservationGet } from "@/app/utils/fetch";
+import { fetchFreeReservationHours, fetchReservationGet } from "@/app/utils/fetch";
 
 export default function ReserveDate({
   uuid,
@@ -23,8 +23,9 @@ export default function ReserveDate({
 }) {
   const [loading, setLoading] = useState(false);
   const [reserved, setReserved] = useState<number[]>([]);
+  const [hours, setHours] = useState<number[]>([]);
 
-  const hours = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
+  const hoursArray = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
 
   async function handleClick(newDate: any) {
     setDate(newDate);
@@ -34,6 +35,18 @@ export default function ReserveDate({
     res[1] === 200 && setReserved(res[0]);
     setLoading(false);
   }
+
+  useEffect(() => {
+    async function fetch() {
+      const res = await fetchFreeReservationHours(uuid, "05", "2024")
+        .then((res) => res.json())
+        .then((res) => console.log(res));
+      // res[1] === 200 && setHours(res[0]);
+    }
+    fetch();
+  }, []);
+
+  // "/api/reserve/<lector_id>" pro casy
 
   return (
     <div className={"container " + openSans}>
@@ -53,7 +66,8 @@ export default function ReserveDate({
           prev2Label={null}
           showNeighboringMonth={false}
           // tileClassName={}
-          tileContent={<span className="span">12</span>}
+          // tileContent={<span className="span">{Math.ceil(Math.random())}</span>}
+          tileContent={({ date }) => <p>{date.getDate()}</p>}
           // tileDisabled={({ activeStartDate, date, view }) => date.getDay() === 2}
         />
       </div>
