@@ -45,7 +45,13 @@ export default function ReserveDate({
 
   useEffect(() => {
     async function fetch() {
-      await fetchFreeReservationHours(uuid, "05", "2024").then((res) => setFreeReservations(res));
+      await fetchFreeReservationHours(uuid, "05", "2024").then((res) => {
+        if (res) {
+          setFreeReservations(res);
+        } else {
+          setFreeReservations([]);
+        }
+      });
     }
     fetch();
   }, []);
