@@ -31,26 +31,28 @@ export default function ReserveDate({
   const [freeReservations, setFreeReservations] = useState<Reservation[]>([]);
 
   const hoursArray = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
+  const test = [200, []];
 
   async function handleClick(newDate: any) {
     setDate(newDate);
     setLoading(true);
-    const res = await fetchReservationGet(uuid, dayjs(newDate).format("DD.MM.YYYY"));
+    await fetchReservationGet(uuid, dayjs(newDate).format("DD.MM.YYYY")).then((res) => {
+      setFreeHours(res);
+      console.log(res);
+    });
     setLoading(false);
   }
 
   useEffect(() => {
     async function fetch() {
-      const res = await fetchFreeReservationHours(uuid, date?.toString(), "2024").then((res) => setFreeReservations(res));
-      // res[1] === 200 && setHours(res[0]);
+      await fetchFreeReservationHours(uuid, "05", "2024").then((res) => setFreeReservations(res));
     }
     fetch();
-    console.log(freeReservations);
   }, []);
 
   useEffect(() => {
-    console.log(freeReservations);
-  }, [freeReservations]);
+    console.log(freeHours);
+  }, [freeHours]);
 
   // "/api/reserve/<lector_id>" pro casy
 

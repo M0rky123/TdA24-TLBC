@@ -1,9 +1,10 @@
 async function fetchData(url: string, options = {}) {
   try {
     // const response = await fetch(url, options);
-    const response = await fetch("http://localhost" + url, options);
+    const response = await fetch("http://localhost:8080" + url, options);
 
     if (!response.ok) {
+      // throw page not found error
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
