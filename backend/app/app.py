@@ -23,13 +23,6 @@ db.init_app(app)
 #def hello_world():
 #    return "Hello TdA"
 
-@app.before_request
-def before_request():
-    headers_dict = dict(request.headers)
-    headers_json = json.dumps(headers_dict, indent=4)
-    json_data = json.dumps(request.json, indent=4) if request.json else None
-    dc_log(f"**DEV** Incoming request to {request.path}", headers_json, json_data)
-
 @app.route('/api')
 def api():
     return {"secret":"The cake is a lie"}
