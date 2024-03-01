@@ -2,13 +2,10 @@
 
 import ProfileNav from "@/app/components/ProfileNav";
 import "../profile.css";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { fetchReservations, putReservation } from "@/app/utils/fetch";
 
 export default function Reservations() {
-  const auth_uuid = sessionStorage.getItem("lector_id")!;
-  const auth_key = sessionStorage.getItem("auth_key")!;
-
   type Reservation = {
     accepted: boolean;
     client_email: string;
@@ -70,12 +67,14 @@ export default function Reservations() {
                 <>
                   <button
                     onClick={() => {
-                      putReservation(res.reservation_id, true, auth_uuid, auth_key);
+                      putReservation(res.reservation_id, true, sessionStorage.getItem("lector_id")!, sessionStorage.getItem("auth_key")!);
                     }}
                   >
                     Přijmout
                   </button>
-                  <button onClick={() => putReservation(res.reservation_id, false, auth_uuid, auth_key)}>Odmítnout</button>
+                  <button onClick={() => putReservation(res.reservation_id, false, sessionStorage.getItem("lector_id")!, sessionStorage.getItem("auth_key")!)}>
+                    Odmítnout
+                  </button>
                 </>
               ) : res.accepted ? (
                 <p>Stav: Přijato</p>
