@@ -5,6 +5,7 @@ from flask.cli import with_appcontext
 import sqlite3
 import uuid as uuidgen
 import bcrypt
+from .logs import log
 
 from .utils import add_user_to_db, user_verify
 
@@ -260,7 +261,6 @@ def update(uuid, kantor_data):
                             updated_values['tags'] = str(tags)
                         elif key == 'contact':
                             if kantor_data[key]['telephone_numbers']:
-                                print(f"TEST {kantor_data[key]['telephone_numbers']}")
                                 updated_values['phone'] = str(kantor_data[key]['telephone_numbers'])
                             if kantor_data[key]['emails']:
                                 updated_values['email'] = str(kantor_data[key]['emails'])
@@ -343,9 +343,7 @@ def add_kantor(data):
         if isinstance(tag, dict):
             tag_name = tag.pop("name", None)
             if tag_name:
-                print(tag_name)
                 new_tag = add_tag(tag_name)
-                print(new_tag)
                 new_tags.append(new_tag)
     tags = new_tags
     data['tags'] = tags
@@ -355,6 +353,7 @@ def add_kantor(data):
         cursor.execute("INSERT INTO lecturers (title_before, first_name, middle_name, last_name, picture_url, title_after, price, location, claim, bio, email, phone, uuid, tags) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)", (title_before, first_name, middle_name, last_name, picture_url, title_after, price, location, claim, bio, str(email), str(phone), str(uuid), str(tags)))
         
     connection.commit()
+    log("success", "New lecturer added to database.")
 
     add_user_to_db(name, password, uuid)
 
@@ -370,13 +369,9 @@ def filter_kantor(filtered_tags=None, loc=None, min_max=None):
         select_query = "SELECT * FROM lecturers WHERE "
         query_params = []
 
-        print(filtered_tags)
-        print(tag_names)
-
         if filtered_tags:
             select_query += "("
             for tag in filtered_tags:
-                print(tag)
                 if tag in tag_names:
                     tag_query = "tags LIKE ? AND "
                     select_query += f"{tag_query}"
@@ -400,9 +395,6 @@ def filter_kantor(filtered_tags=None, loc=None, min_max=None):
 
         if select_query.endswith(" AND "):
             select_query = select_query[:-5]
-
-        print(select_query)
-        print(query_params)
 
         query = cursor.execute(select_query, tuple(query_params))
         result = query.fetchall()

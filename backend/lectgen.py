@@ -44,7 +44,7 @@ headers = {
     "password": "d8Ef6!dGG_pv"
 }
 
-for i in range(20):
+for i in range(1):
     random_person = generate_random_person()
 
     # Make the POST request
