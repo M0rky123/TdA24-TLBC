@@ -1,8 +1,7 @@
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function ProfileNav() {
   const route = useRouter();
-  const pathname = usePathname() === "/profile/reservations";
 
   return (
     <nav className="profile-nav">
@@ -14,13 +13,6 @@ export default function ProfileNav() {
           }}
         >
           Rezervace
-          {pathname && (
-            <ul className="profile-tabbed-list">
-              <li>Sublist Item 1</li>
-              <li>Sublist Item 2</li>
-              <li>Sublist Item 3</li>
-            </ul>
-          )}
         </li>
         <li
           style={{ cursor: "pointer" }}
