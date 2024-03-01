@@ -33,8 +33,9 @@ export default function ReserveDate({
   const hoursArray = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
   const test = [200, []];
 
-  async function handleClick(newDate: any) {
-    setDate(newDate);
+  async function handleClick(newDate: Date) {
+    console.log(dayjs(newDate));
+    setDate(dayjs(newDate));
     setLoading(true);
     await fetchReservationGet(uuid, dayjs(newDate).format("DD.MM.YYYY")).then((res) => {
       setFreeHours(res);
@@ -43,17 +44,18 @@ export default function ReserveDate({
     setLoading(false);
   }
 
+  function fetchFreeRes(date: Dayjs | null) {
+    fetchFreeReservationHours(uuid, date?.format("MM"), date?.format("YYYY")).then((res) => {
+      if (res) {
+        setFreeReservations(res);
+      } else {
+        setFreeReservations([]);
+      }
+    });
+  }
+
   useEffect(() => {
-    async function fetch() {
-      await fetchFreeReservationHours(uuid, "05", "2024").then((res) => {
-        if (res) {
-          setFreeReservations(res);
-        } else {
-          setFreeReservations([]);
-        }
-      });
-    }
-    fetch();
+    fetchFreeRes(date);
   }, []);
 
   useEffect(() => {
@@ -67,6 +69,7 @@ export default function ReserveDate({
       <div className="calendar">
         <Calendar
           onClickDay={(date) => handleClick(date)}
+          onActiveStartDateChange={({ action, activeStartDate, value, view }) => fetchFreeRes(dayjs(activeStartDate))}
           value={date?.toString()}
           formatDay={(_, date) => date.getDate().toString()}
           calendarType="iso8601"
