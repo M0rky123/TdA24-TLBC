@@ -6,8 +6,7 @@ import { useEffect, useState } from "react";
 import { fetchReservations, putReservation } from "@/app/utils/fetch";
 
 export default function Reservations() {
-  const auth_uuid = sessionStorage.getItem("lector_id")!;
-  const auth_key = sessionStorage.getItem("auth_key")!;
+ 
 
   type Reservation = {
     accepted: boolean;
@@ -36,6 +35,7 @@ export default function Reservations() {
 
   useEffect(() => {
     const auth_uuid = sessionStorage.getItem("lector_id")!;
+    const auth_key = sessionStorage.getItem("auth_key")!;
 
     fetchReservations(auth_uuid).then((res) => console.log(res));
     fetchReservations(auth_uuid).then((res) => {
