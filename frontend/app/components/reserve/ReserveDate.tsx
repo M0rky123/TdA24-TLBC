@@ -21,10 +21,14 @@ export default function ReserveDate({
   time: number | undefined;
   setTime: (time: number | undefined) => void;
 }) {
+  type Reservation = {
+    date: number;
+    count: number;
+  };
+
   const [loading, setLoading] = useState(false);
   const [freeHours, setFreeHours] = useState<number[]>([]);
-  const [freeReservations, setFreeReservations] = useState<number[]>([]);
-  const [hours, setHours] = useState<number[]>([]);
+  const [freeReservations, setFreeReservations] = useState<Reservation[]>([]);
 
   const hoursArray = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
 
@@ -37,11 +41,16 @@ export default function ReserveDate({
 
   useEffect(() => {
     async function fetch() {
-      const res = await fetchFreeReservationHours(uuid, "05", "2024").then((res) => setFreeHours(res));
+      const res = await fetchFreeReservationHours(uuid, date?.toString(), "2024").then((res) => setFreeReservations(res));
       // res[1] === 200 && setHours(res[0]);
     }
     fetch();
+    console.log(freeReservations);
   }, []);
+
+  useEffect(() => {
+    console.log(freeReservations);
+  }, [freeReservations]);
 
   // "/api/reserve/<lector_id>" pro casy
 
@@ -62,14 +71,13 @@ export default function ReserveDate({
           next2Label={null}
           prev2Label={null}
           showNeighboringMonth={false}
-          // tileClassName={}
-          // tileContent={<span className="span">{Math.ceil(Math.random())}</span>}
-          tileContent={({ date }) => <p>{date.getDate()}</p>}
-          // tileDisabled={({ activeStartDate, date, view }) => date.getDay() === 2}
+          tileContent={({ activeStartDate, date, view }) => (
+            <span className="span">{freeReservations.find((reservation) => reservation.date === date.getDate())?.count ?? "12"}</span>
+          )}
         />
       </div>
       <ul className="list">
-        {hours.map((hour, index) => (
+        {freeHours.map((hour, index) => (
           <li key={index} className="item">
             <button className="item_button" onClick={() => setTime(hour)}>{`${hour.toString().padStart(2, "0")}:00 - ${(hour + 1)
               .toString()
