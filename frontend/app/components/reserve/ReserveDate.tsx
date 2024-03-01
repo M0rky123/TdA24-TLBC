@@ -60,6 +60,10 @@ export default function ReserveDate({
 
   useEffect(() => {
     fetchFreeRes(date);
+    fetchReservationGet(uuid, dayjs(date).format("DD.MM.YYYY")).then((res) => {
+      setFreeHours(res);
+      setLoading(false);
+    });
   }, []);
 
   return (
@@ -87,7 +91,7 @@ export default function ReserveDate({
       </div>
       <ul className="list">
         {loading ? (
-          <div>
+          <div style={{ width: "100%", display: "grid", placeContent: "center" }}>
             <Loader />
           </div>
         ) : (
