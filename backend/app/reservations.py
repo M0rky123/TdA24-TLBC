@@ -56,9 +56,14 @@ def check_day(lecturer_id, date):
         
 def check_month(lecturer_id, month, year):
     print(f"01.{month}.{year}", f"31.{month}.{year}")
+    month = int(month)
+    year = int(year)
+
+
     with sqlite3.connect(current_app.config['DATABASE']) as connection:
         cursor = connection.cursor()
-        cursor.execute("SELECT date, COUNT(*) FROM reservations WHERE date BETWEEN ? AND ? AND lecturer_id = ? GROUP BY date", (f"01.{month}.{year}", f"31.{month}.{year}", lecturer_id))
+        #cursor.execute("SELECT date, COUNT(*) FROM reservations WHERE date BETWEEN ? AND ? AND lecturer_id = ? GROUP BY date", (start, end, lecturer_id))
+        cursor.execute("SELECT date, COUNT(*) FROM reservations WHERE substr(date, 4, 2) = ? AND substr(date, 7, 4) = ? AND lecturer_id = ? GROUP BY date", (f"{month:02d}", f"{year}", lecturer_id))
         data = cursor.fetchall()
         print(data)
         if data == []:
