@@ -13,6 +13,41 @@ async function fetchData(url: string, options = {}) {
   }
 }
 
+export async function editLecturer(
+  uuid: string,
+  auth_key: string,
+  titleB: string,
+  fName: string,
+  mName: string,
+  lName: string,
+  titleA: string,
+  loc: string,
+  claim: string,
+  bio: string,
+  tags: string[],
+  price: number,
+  contact: { tels: string[]; emails: string[] }
+) {
+  return fetchData(`/api/lecturers/${uuid}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      auth_key: auth_key,
+      title_before: titleB,
+      first_name: fName,
+      middle_name: mName,
+      last_name: lName,
+      title_after: titleA,
+      location: loc,
+      claim: claim,
+      bio: bio,
+      tags: tags,
+      price_per_hour: price,
+      contact: contact,
+    }),
+  });
+}
+
 export async function fetchFilter(tagsArray: string[], locationsArray: string[], priceArray: number[]) {
   return fetchData("/api/lecturers/filter", {
     method: "POST",
