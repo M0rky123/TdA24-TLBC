@@ -3,10 +3,13 @@
 import { useEffect, useState } from "react";
 import "./profile.css";
 import { fetchLecturer } from "@/app/utils/fetch";
+import { useRouter } from "next/navigation";
 
 export default function Profile() {
   const [lecturer, setLecturer] = useState<any>([]);
   const [loaded, setLoaded] = useState(false);
+
+  const route = useRouter();
 
   useEffect(() => {
     const auth_key = sessionStorage.getItem("auth_key")!;
@@ -28,11 +31,14 @@ export default function Profile() {
           <li>
             <a href="/edit">Editace</a>
           </li>
-          <li>
-
-          </li>
-          <li>
-            <a href="/logout">Odhlásit</a>
+          <li></li>
+          <li
+            onClick={() => {
+              sessionStorage.clear();
+              route.push("/login");
+            }}
+          >
+            Odhlásit se
           </li>
         </ul>
       </nav>
@@ -74,7 +80,9 @@ export default function Profile() {
             <th>Tagy</th>
             <td>
               <ul>
-                {lecturer.tags.map((tag: {name:string}, i:number) => <li key={i}>{tag.name}</li>)}
+                {lecturer.tags.map((tag: { name: string }, i: number) => (
+                  <li key={i}>{tag.name}</li>
+                ))}
               </ul>
             </td>
           </tr>
@@ -86,7 +94,9 @@ export default function Profile() {
             <th>Telefonní čísla</th>
             <td>
               <ul>
-              {lecturer.contact.telephone_numbers.map((tel: string, i:number) => <li key={i}>{tel}</li>)}
+                {lecturer.contact.telephone_numbers.map((tel: string, i: number) => (
+                  <li key={i}>{tel}</li>
+                ))}
               </ul>
             </td>
           </tr>
@@ -94,7 +104,9 @@ export default function Profile() {
             <th>E-maily</th>
             <td>
               <ul>
-              {lecturer.contact.emails.map((mail: string, i:number) => <li key={i}>{mail}</li>)}
+                {lecturer.contact.emails.map((mail: string, i: number) => (
+                  <li key={i}>{mail}</li>
+                ))}
               </ul>
             </td>
           </tr>

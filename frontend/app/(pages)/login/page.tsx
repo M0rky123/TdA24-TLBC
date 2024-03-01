@@ -15,7 +15,7 @@ export default function Login() {
   const route = useRouter();
 
   async function handleLogin(username: string, password: string) {
-    await fetch("http://localhost/api/auth", {
+    await fetch("http://localhost:8080/api/auth", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name: username, password: password }),
@@ -27,7 +27,6 @@ export default function Login() {
           route.push("/profile");
         });
       } else {
-        // throw new Error("There was a problem with the fetch operation");
         res.json().then((res) => {
           if (res.status == "name") alert("Zadané lektorské jméno neexistuje!");
           else if (res.status == "pass") alert("Hesla se neschodují!");
@@ -35,7 +34,6 @@ export default function Login() {
         });
       }
     });
-    // .then((res) => route.push("/profile?uuid=6dee7e9a-7548-4ab4-863d-d8b5ad20bf28"));
   }
 
   return (
@@ -43,10 +41,18 @@ export default function Login() {
       <h1 className={lalezar} style={{ color: "var(--dark)", lineHeight: "1", marginBottom: "1rem" }}>
         Login
       </h1>
-      <form className={openSans + " " + style.form} method="post">
+      <form className={openSans + " " + style.form} method="post" autoComplete="on">
         <div className={style.field}>
           <label htmlFor="user">Lektorské jméno</label>
-          <input type="text" id="user" name="user" value={username} onChange={(e) => setUsername(e.currentTarget.value)} className={style.input} />
+          <input
+            type="text"
+            id="user"
+            name="user"
+            value={username}
+            onChange={(e) => setUsername(e.currentTarget.value)}
+            autoComplete="username"
+            className={style.input}
+          />
         </div>
         <div className={style.field}>
           <label htmlFor="pass">Lektorské heslo</label>
@@ -56,6 +62,8 @@ export default function Login() {
             name="pass"
             value={password}
             onChange={(e) => setPassword(e.currentTarget.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleLogin(username, password)}
+            autoComplete="current-password"
             className={style.input}
           />
           <button className={style.icon} type="button" onClick={() => setShowPass(!showPass)} tabIndex={-1}>

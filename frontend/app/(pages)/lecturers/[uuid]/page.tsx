@@ -19,7 +19,7 @@ export default async function page({ params: { uuid } }: { params: { uuid: strin
     <div className={style.container + " " + openSans}>
       <div className={style.image}>
         <Image
-          src={lecturer?.picture_url ? lecturer?.picture_url : "https://picsum.photos/300"}
+          src={lecturer.picture_url ? lecturer.picture_url : "https://picsum.photos/300"}
           alt="foto lektora"
           width={300}
           height={300}
@@ -31,19 +31,19 @@ export default async function page({ params: { uuid } }: { params: { uuid: strin
       </div>
       <div className={style.text}>
         <h2 className={lalezar + " " + style.h2}>
-          {lecturer?.title_before + " " + lecturer?.first_name + " " + lecturer?.middle_name + " " + lecturer?.last_name + " " + lecturer?.title_after}
+          {lecturer.title_before + " " + lecturer.first_name + " " + lecturer.middle_name + " " + lecturer.last_name + " " + lecturer.title_after}
         </h2>
-        <h3 className={style.h3}>{lecturer?.claim}</h3>
-        <p>{lecturer?.bio}</p>
+        <h3 className={style.h3}>{lecturer.claim}</h3>
+        <p>{lecturer.bio}</p>
         <div className={style.info}>
           <div className={style.priceLoc}>
             <span className={style.span}>
               <FontAwesomeIcon icon={faMapPin} className={style.icon} /> &nbsp;
-              {lecturer?.location}
+              {lecturer.location}
             </span>
             <span className={style.span}>
               <FontAwesomeIcon icon={faCoins} className={style.icon} /> &nbsp;
-              {lecturer?.price_per_hour} Kč/hod
+              {lecturer.price_per_hour} Kč/hod
             </span>
           </div>
           <div className={style.listContainer}>
@@ -51,7 +51,7 @@ export default async function page({ params: { uuid } }: { params: { uuid: strin
               <FontAwesomeIcon icon={faSquarePhone} className={style.icon} />
             </span>
             <ul className={style.list}>
-              {lecturer?.contact.telephone_numbers?.map((phone: string, index: number) => (
+              {lecturer.contact.telephone_numbers?.map((phone: string, index: number) => (
                 <li key={index}>{phone}</li>
               ))}
             </ul>
@@ -61,7 +61,7 @@ export default async function page({ params: { uuid } }: { params: { uuid: strin
               <FontAwesomeIcon icon={faAt} className={style.icon} />
             </span>
             <ul className={style.list}>
-              {lecturer?.contact.emails?.map((email: string, index: number) => (
+              {lecturer.contact.emails?.map((email: string, index: number) => (
                 <li key={index}>{email}</li>
               ))}
             </ul>
@@ -71,7 +71,7 @@ export default async function page({ params: { uuid } }: { params: { uuid: strin
           <li>
             <FontAwesomeIcon icon={faTag} className={style.icon} />
           </li>
-          {lecturer?.tags?.map((tag: { name: string; uuid: string }, index: number) => (
+          {lecturer.tags?.map((tag: { name: string; uuid: string }, index: number) => (
             <li key={index} className={style.tag}>
               {tag?.name}
             </li>

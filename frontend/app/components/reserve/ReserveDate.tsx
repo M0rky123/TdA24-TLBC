@@ -39,7 +39,7 @@ export default function ReserveDate({
   const hoursArray = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
 
   async function handleClick(newDate: Date) {
-    console.log(dayjs(newDate));
+    setTime(undefined);
     setDate(dayjs(newDate));
     setLoading(true);
     fetchReservationGet(uuid, dayjs(newDate).format("DD.MM.YYYY")).then((res) => {
@@ -98,7 +98,7 @@ export default function ReserveDate({
           hoursArray.map((hour, index) => (
             <li key={index} className="item">
               <button
-                className={`item-button ${hour === time && "active-item-button"} ${date}`}
+                className={`item-button ${hour === time ? "active-item-button" : ""}`}
                 disabled={freeHours[0]?.reserved_times?.includes(index)}
                 onClick={() => {
                   setTime(hour);
