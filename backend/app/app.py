@@ -4,7 +4,7 @@ from flask_cors import CORS
 from . import db
 from .db import add_kantor, filter_kantor, get_all_tags, get_count, get, get_all, delete, get_locations, price_min_max, update, get_page
 from .utils import get_admin_login, get_user_login, password_hash, api_verify, add_admin_to_db, remove_admin_from_db, time_index, user_verify
-from .reservations import check_day, make_reservation
+from .reservations import check_day, check_month, make_reservation
 from .profile import generate_ical, lecturer_reservations
 
 app = Flask(__name__, static_folder="static")
@@ -127,6 +127,7 @@ def misc():
     return jsonify({"count": count, "min_max": min_max, "location": location, "existing_tags": existing_tags})
 
 
+
 ########### Soutěžní kolo ###########
 @app.route("/api/auth", methods=["POST"])
 def auth():
@@ -186,6 +187,12 @@ def download_ical():
 def get_lecturer_reservations(lector_id):
     message = lecturer_reservations(lector_id)
     return message, 200
+
+@app.route("/api/reservations/<lector_id>", methods=["GET"])
+def get_reservations_by_month(lector_id):
+    message, status = check_month(lector_id, "05", "2024")
+    print(type(message))
+    return message, status
 
 ########### Debug ###########
 
