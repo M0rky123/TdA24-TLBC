@@ -6,24 +6,20 @@ import { useEffect, useState } from "react";
 import { fetchReservations } from "@/app/utils/fetch";
 
 export default function Reservations() {
-  const auth_uuid = sessionStorage.getItem("lector_id")!;
+  
 
   const [reservations, setReservations] = useState<any>([]);
 
   useEffect(() => {
-    fetchReservations(auth_uuid).then((res) => console.log(res));
-  }, []);
+    const auth_uuid = sessionStorage.getItem("lector_id")!;
 
-  useEffect(() => {
+    fetchReservations(auth_uuid).then((res) => console.log(res));
     fetchReservations(auth_uuid).then((res) => {
       setReservations(res);
       console.log(res);
     });
   }, []);
 
-  useEffect(() => {
-    console.log(reservations);
-  }, [reservations]);
 
   return (
     <div className="profile-page">
