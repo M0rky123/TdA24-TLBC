@@ -9,8 +9,8 @@ import { useRouter } from "next/navigation";
 
 export default function Login() {
   const [showPass, setShowPass] = useState(false);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
   const route = useRouter();
 
@@ -19,13 +19,9 @@ export default function Login() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name: username, password: password }),
-    });
-    console.log(res.json());
-    if (res.status === 200) {
-      // route.push("/profile?uuid={}");
-    } else {
-      alert("Nesprávné jméno nebo heslo");
-    }
+    })
+      .then((res) => res.json())
+      .then((res) => console.log(res));
   }
 
   return (
