@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import style from "./page.module.css";
 import { LocalStorage } from "@/app/components/LocalStorage";
 import { fetchLecturer } from "@/app/utils/fetch";
@@ -8,9 +8,15 @@ import { useSearchParams } from "next/navigation";
 
 export default function Profile() {
   const [token, setToken] = LocalStorage("token", null);
-  const lecturer = fetchLecturer("uuid");
-  const uuid = useSearchParams().get("uuid");
-  useEffect(() => {}, []);
+
+  const uuid: string = useSearchParams().get("uuid")!;
+
+  useEffect(() => {
+    async function lec() {
+      await fetchLecturer(uuid).then((res) => console.log(res));
+    }
+    lec();
+  }, []);
 
   return (
     <>

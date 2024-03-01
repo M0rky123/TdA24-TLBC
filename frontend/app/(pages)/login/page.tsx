@@ -14,16 +14,19 @@ export default function Login() {
 
   const route = useRouter();
 
-  async function handleLogin(username: string, password: string) {
-    const res = await fetch("http://localhost:8080/api/auth", {
-      method: "POST",
-      headers: { "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",  },
-      body: JSON.stringify({ name: username, password: password }),
-    })
-      .then((res) => res.json())
-      .then((res) => console.log(res));
-  }
+  // async function handleLogin(username: string, password: string) {
+  //   const res = await fetch("http://localhost:8080/api/auth", {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify({ name: username, password: password }),
+  //   })
+  //     .then((res) => res.json())
+  //     .then((res) => console.log(res));
+  // }
+
+  const handleLogin = (username: string, password: string) => {
+    route.push("/profile?uuid=6dee7e9a-7548-4ab4-863d-d8b5ad20bf28");
+  };
 
   return (
     <div className={style.container}>
