@@ -191,8 +191,12 @@ def get_lecturer_reservations(lector_id):
 @app.route("/api/reservations/<lector_id>", methods=["GET"])
 def get_reservations_by_month(lector_id):
     data = request.headers
-    month = data.get("month")
-    year = data.get("year") 
+    month = data.get("Month")
+    year = data.get("Year") 
+    print(month)
+    print(type(month))
+    print(year)
+    print(type(year))
     message, status = check_month(lector_id, month, year)
     return message, status
 
