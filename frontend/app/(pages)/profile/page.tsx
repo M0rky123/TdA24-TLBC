@@ -20,6 +20,7 @@ export default function Profile() {
     lec();
   }, []);
 
+  
   return (
     <div className="profile-page">
       <ProfileNav />
