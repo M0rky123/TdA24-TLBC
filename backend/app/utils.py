@@ -1,3 +1,4 @@
+import base64
 import bcrypt
 import sqlite3
 from flask import current_app
@@ -51,13 +52,14 @@ def add_user_to_db(name, password, lector_id):
 
 #### ADMIN STUFF ####
 def get_admin_login(data):
-    name = data.get('name')
-    password = data.get('password')
-    if name == None:
+    auth = data.get('Authorization')
+
+    if auth == None:
         return False
-    if password == None:
-        return False
-    success = api_verify(name, password)
+    encoded_credentials = auth.split()[1]
+    decoded_credentials = base64.b64decode(encoded_credentials).decode('utf-8')
+    username, password = decoded_credentials.split(':')
+    success = api_verify(username, password)
     return success
 
 def password_hash(password):

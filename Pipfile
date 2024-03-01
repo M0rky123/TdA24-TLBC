@@ -4,11 +4,13 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+requests = "*"
 flask = {extras = ["async"], version = "*"}
 colorama = "*"
 flask-cors = "*"
 gunicorn = "*"
 bcrypt = "*"
+
 [dev-packages]
 
 [requires]
