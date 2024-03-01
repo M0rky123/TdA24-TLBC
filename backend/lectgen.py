@@ -36,7 +36,7 @@ def generate_random_person():
         }
     return randomized_data
 
-url = "http://127.0.0.1/api/lecturers"
+url = "http://127.0.0.1:8080/api/lecturers"
 
 headers = {
     "Content-Type": "application/json",
@@ -50,7 +50,6 @@ for i in range(20):
     # Make the POST request
     response_post = requests.post(url, json=random_person, headers=headers)
     print(response_post.status_code)
-    # Make it wait for 2 seconds
-    time.sleep(2)
+
 
 print("Done!")

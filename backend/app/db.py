@@ -16,8 +16,8 @@ CREATE TABLE IF NOT EXISTS tags (
 );
 """
 
-CREATE_KANTORI_TABLE = """
-CREATE TABLE IF NOT EXISTS kantori (
+CREATE_LECTURERS_TABLE = """
+CREATE TABLE IF NOT EXISTS lecturers (
   uuid TEXT,
   title_before TEXT,
   first_name TEXT NOT NULL,
@@ -55,6 +55,7 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE_RESERVATION_TABLE = """
 CREATE TABLE IF NOT EXISTS reservations (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
+    reservation_id TEXT NOT NULL,
     lecturer_id TEXT NOT NULL,
     client_name TEXT NOT NULL,
     client_email TEXT NOT NULL,
@@ -69,7 +70,7 @@ CREATE TABLE IF NOT EXISTS reservations (
     accepted BOOLEAN    
     );"""
 
-INIT_DB_STATEMENTS = [CREATE_TAG_TABLE, CREATE_KANTORI_TABLE, CREATE_ADMIN_TABLE, CREATE_USER_TABLE, CREATE_RESERVATION_TABLE]
+INIT_DB_STATEMENTS = [CREATE_TAG_TABLE, CREATE_LECTURERS_TABLE, CREATE_ADMIN_TABLE, CREATE_USER_TABLE, CREATE_RESERVATION_TABLE]
 
 # DONE: Refactor the functions, make function names more continual, delete useless comments, add comments to the code that make sense, don't fuck up what works
 
@@ -125,7 +126,7 @@ def get_all():
     with sqlite3.connect(current_app.config['DATABASE']) as connection:
         connection.row_factory = dict_factory
         cursor = connection.cursor()
-        cursor.execute("SELECT * FROM kantori")
+        cursor.execute("SELECT * FROM lecturers")
         data = cursor.fetchall()
         for lector in data:
             lector.pop("id", None)
@@ -157,7 +158,7 @@ def get_page(page_number, limit=6):
         connection.row_factory = dict_factory
         cursor = connection.cursor()
         
-        cursor.execute(f"SELECT * FROM kantori LIMIT {limit} OFFSET {offset}")
+        cursor.execute(f"SELECT * FROM lecturers LIMIT {limit} OFFSET {offset}")
         data = cursor.fetchall()
         if data:
             lecturers = []
@@ -192,7 +193,7 @@ def get(uuid):
     with sqlite3.connect(current_app.config['DATABASE']) as connection:
         connection.row_factory = dict_factory
         cursor = connection.cursor()
-        cursor.execute("SELECT * FROM kantori WHERE uuid = ?", (uuid,))
+        cursor.execute("SELECT * FROM lecturers WHERE uuid = ?", (uuid,))
         data = cursor.fetchone()
         if data:
             data["price_per_hour"] = data.pop("price", None)
@@ -208,14 +209,14 @@ def get(uuid):
 def get_count():
     with sqlite3.connect(current_app.config['DATABASE']) as connection:
         cursor = connection.cursor()
-        cursor.execute("SELECT COUNT(*) FROM kantori")
+        cursor.execute("SELECT COUNT(*) FROM lecturers")
         data = cursor.fetchone()
         return data[0]
 
 def price_min_max():
     with sqlite3.connect(current_app.config['DATABASE']) as connection:
         cursor = connection.cursor()
-        cursor.execute("SELECT MIN(price), MAX(price) FROM kantori")
+        cursor.execute("SELECT MIN(price), MAX(price) FROM lecturers")
         data = cursor.fetchone()
         return {"min": data[0], "max": data[1]} 
 
@@ -228,7 +229,7 @@ def get_all_tags():
 def get_locations():
     with sqlite3.connect(current_app.config['DATABASE']) as connection:
         cursor = connection.cursor()
-        cursor.execute("SELECT DISTINCT location FROM kantori")
+        cursor.execute("SELECT DISTINCT location FROM lecturers")
         return cursor.fetchall()
 
 def update(uuid, kantor_data):
@@ -239,7 +240,7 @@ def update(uuid, kantor_data):
         cursor = connection.cursor()
 
         # Fetch existing data to update selectively
-        cursor.execute("SELECT * FROM kantori WHERE uuid=?", (str(uuid),))
+        cursor.execute("SELECT * FROM lecturers WHERE uuid=?", (str(uuid),))
         existing_data = cursor.fetchone()
 
         if existing_data:
@@ -271,7 +272,7 @@ def update(uuid, kantor_data):
                         updated_values[key] = None  
 
             # Generate SQL UPDATE query
-            update_query = "UPDATE kantori SET "
+            update_query = "UPDATE lecturers SET "
             update_values = []
 
             for key, value in updated_values.items():
@@ -296,7 +297,7 @@ def update(uuid, kantor_data):
 def delete(uuid):
     with sqlite3.connect(current_app.config['DATABASE']) as connection:
         cursor = connection.cursor()
-        cursor.execute("DELETE FROM kantori WHERE uuid = ?", (uuid,))
+        cursor.execute("DELETE FROM lecturers WHERE uuid = ?", (uuid,))
         connection.commit()
 
 def add_tag(tag_name):
@@ -351,7 +352,7 @@ def add_kantor(data):
 
     with sqlite3.connect(current_app.config['DATABASE']) as connection:
         cursor = connection.cursor()
-        cursor.execute("INSERT INTO kantori (title_before, first_name, middle_name, last_name, picture_url, title_after, price, location, claim, bio, email, phone, uuid, tags) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)", (title_before, first_name, middle_name, last_name, picture_url, title_after, price, location, claim, bio, str(email), str(phone), str(uuid), str(tags)))
+        cursor.execute("INSERT INTO lecturers (title_before, first_name, middle_name, last_name, picture_url, title_after, price, location, claim, bio, email, phone, uuid, tags) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)", (title_before, first_name, middle_name, last_name, picture_url, title_after, price, location, claim, bio, str(email), str(phone), str(uuid), str(tags)))
         
     connection.commit()
 
@@ -366,7 +367,7 @@ def filter_kantor(filtered_tags=None, loc=None, min_max=None):
     with sqlite3.connect(current_app.config['DATABASE']) as connection:
         connection.row_factory = dict_factory
         cursor = connection.cursor()
-        select_query = "SELECT * FROM kantori WHERE "
+        select_query = "SELECT * FROM lecturers WHERE "
         query_params = []
 
         print(filtered_tags)
