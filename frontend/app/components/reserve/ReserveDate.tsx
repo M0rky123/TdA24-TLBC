@@ -97,9 +97,13 @@ export default function ReserveDate({
         ) : (
           hoursArray.map((hour, index) => (
             <li key={index} className="item">
-              <button className="item_button" disabled={freeHours[0]?.reserved_times?.includes(index)} onClick={() => setTime(hour)}>{`${hour
-                .toString()
-                .padStart(2, "0")}:00 - ${(hour + 1).toString().padStart(2, "0")}:00 `}</button>
+              <button
+                className={`item-button ${hour === time && "active-item-button"} ${date}`}
+                disabled={freeHours[0]?.reserved_times?.includes(index)}
+                onClick={() => {
+                  setTime(hour);
+                }}
+              >{`${hour.toString().padStart(2, "0")}:00 - ${(hour + 1).toString().padStart(2, "0")}:00 `}</button>
             </li>
           ))
         )}
