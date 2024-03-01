@@ -170,18 +170,20 @@ def download_ical():
     request_data = request.json
     lecturer_id = request_data.get('lecturer_id')
     auth_token = request_data.get('auth_token')
+    auth = lector_verify(lecturer_id, auth_token)
+    if auth:
 
-    ical_data, status_code = generate_ical(lecturer_id, auth_token)
-    
-    if status_code == 200:
-        response = make_response(ical_data)
-        response.headers['Content-Disposition'] = 'attachment; filename=reservations.ics'
-        response.headers['Content-Type'] = 'text/calendar'
-        return response
-    elif status_code == 204:
-        return "", 204  # No Content
-    else:
-        return {"error": "Unauthorized"}, 401
+        ical_data, status_code = generate_ical(lecturer_id, auth_token)
+        
+        if status_code == 200:
+            response = make_response(ical_data)
+            response.headers['Content-Disposition'] = 'attachment; filename=reservations.ics'
+            response.headers['Content-Type'] = 'text/calendar'
+            return response
+        elif status_code == 204:
+            return "", 204  # No Content
+        else:
+            return {"error": "Unauthorized"}, 401
     
 @app.route('/api/lecturers/<lector_id>/reservations', methods=['GET'])
 def get_lecturer_reservations(lector_id):
