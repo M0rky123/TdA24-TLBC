@@ -7,7 +7,6 @@ from .email import reserve_confirm
 from .utils import time_index
 
 def make_reservation(data, lecturer_id):
-    print(data)
     client_name = data.get('name')
     client_email = data.get('email')
     client_phone = data.get('phone')
@@ -19,9 +18,13 @@ def make_reservation(data, lecturer_id):
     place = data.get('place', None)
     note = data.get('note', None)
 
+
     try:
         with sqlite3.connect(current_app.config['DATABASE']) as connection:
             cursor = connection.cursor()
+            cursor.execute("SELECT * FROM reservations WHERE date=? AND time_index=? AND lecturer_id=?", (date, index, lecturer_id))
+            if cursor.fetchone():
+                return "Time already reserved", 400
             cursor.execute("INSERT INTO reservations (reservation_id, lecturer_id, client_name, client_email, client_phone, date, time, time_index, online, place, note, responded) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)", (reservation_id, lecturer_id, client_name, client_email, client_phone, date, time, index, online, place, note, False))
             connection.commit()
             cursor.execute("SELECT first_name, middle_name, last_name, phone FROM lecturers WHERE uuid=?", (lecturer_id,))
