@@ -16,6 +16,7 @@ def get_user_login(name, password):
             hashed_password = cursor.fetchone()
         if hashed_password == None:
             return False, None, None, "Incorrect username"
+        print(hashed_password[2])
         success = bcrypt.checkpw(password.encode('utf-8'), hashed_password[2])
         if not success:
             return False, None, None, "Incorrect password"
@@ -37,9 +38,10 @@ def add_user_to_db(name, password, lector_id):
         return {"error": "Missing required fields"}
     else:
         auth_token = generate_auth_token()
+        hashed_password = password_hash(password)
         with sqlite3.connect(current_app.config['DATABASE']) as connection:
             cursor = connection.cursor()
-            cursor.execute("INSERT INTO users (name, password, auth_token, lector_id) VALUES (?, ?, ?, ?)", (name, password, auth_token, lector_id))
+            cursor.execute("INSERT INTO users (name, password, auth_token, lector_id) VALUES (?, ?, ?, ?)", (name, hashed_password, auth_token, lector_id))
             connection.commit()
         return 200, {"success": "User added"}
 

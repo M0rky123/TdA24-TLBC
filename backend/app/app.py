@@ -1,6 +1,6 @@
 import json
 from flask import Flask, make_response, render_template, request, jsonify
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from . import db
 from .db import add_kantor, filter_kantor, get_all_tags, get_count, get, get_all, delete, get_locations, price_min_max, update, get_page
 from .utils import get_admin_login, get_user_login, password_hash, api_verify, add_admin_to_db, remove_admin_from_db, time_index, user_verify
@@ -11,7 +11,7 @@ app = Flask(__name__, static_folder="static")
 app.config['DATABASE'] = './app/data/lecture.db'
 app.json.sort_keys = False
 
-CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}})
+CORS(app)
 
 
 db.init_app(app)

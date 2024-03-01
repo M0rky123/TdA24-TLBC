@@ -13,15 +13,15 @@ class bcolors:
 
 def log(msg_type, message):
     log_type = "Info"
-    info = f"{bcolors.BOLD}[{msg_type}{log_type}{bcolors.BOLD}]{bcolors.ENDC}"
+    info = f"{bcolors.BOLD}[{msg_type}{log_type}{bcolors.BOLD}]{bcolors.ENDC} {message}"
     if msg_type == "error":
         log_type = "Error"
-        print(info = f"{bcolors.BOLD}[{msg_type}{log_type}{bcolors.BOLD}]{bcolors.ENDC}")
+        print(info = f"{bcolors.BOLD}[{msg_type}{log_type}{bcolors.BOLD}]{bcolors.ENDC} {message}")
     elif msg_type == "warning":
         log_type = "Warning"
-        print(print(info = f"{bcolors.BOLD}[{msg_type}{log_type}{bcolors.BOLD}]{bcolors.ENDC}"))
+        print(print(info = f"{bcolors.BOLD}[{msg_type}{log_type}{bcolors.BOLD}]{bcolors.ENDC} {message}"))
     elif msg_type == "success":
         log_type = "Success"
-        print(print(info = f"{bcolors.BOLD}[{msg_type}{log_type}{bcolors.BOLD}]{bcolors.ENDC}"))
+        print(print(info = f"{bcolors.BOLD}[{msg_type}{log_type}{bcolors.BOLD}]{bcolors.ENDC} {message}"))
     else:
-        print(print(info = f"{bcolors.BOLD}[{msg_type}{log_type}{bcolors.BOLD}]{bcolors.ENDC}"))
+        print(print(info = f"{bcolors.BOLD}[{msg_type}{log_type}{bcolors.BOLD}]{bcolors.ENDC} {message}"))
