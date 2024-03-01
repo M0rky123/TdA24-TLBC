@@ -20,7 +20,23 @@ export default function Profile() {
   }, []);
 
   return (
-    <div>
+    <div className="profile-page">
+      <nav className="profile-nav">
+        <ul>
+          <li>
+            <a href="/profile">Profil</a>
+          </li>
+          <li>
+            <a href="/edit">Editace</a>
+          </li>
+          <li>
+
+          </li>
+          <li>
+            <a href="/logout">Odhlásit</a>
+          </li>
+        </ul>
+      </nav>
       {loaded ? (
         <table>
           <tr>

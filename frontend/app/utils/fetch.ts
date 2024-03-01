@@ -48,6 +48,13 @@ export async function editLecturer(
   });
 }
 
+export async function fetchFreeReservationHours(uuid: string, month?: string, year?: string) {
+  return fetchData(`/api/reservations/${uuid}`, {
+    method: "GET",
+    headers: { "Content-Type": "application/json", month: month, year: year },
+  });
+}
+
 export async function fetchFilter(tagsArray: string[], locationsArray: string[], priceArray: number[]) {
   return fetchData("/api/lecturers/filter", {
     method: "POST",
