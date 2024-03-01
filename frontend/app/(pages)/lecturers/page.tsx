@@ -19,7 +19,7 @@ export default function Lecturers() {
 
   return (
     <>
-      <h1 className={lalezar} style={{ color: "var(--dark)", fontSize: "56px", margin: "0 auto" }}>
+      <h1 className={lalezar} style={{ color: "var(--dark)", fontSize: "3rem", margin: "0 auto" }}>
         Katalog lektorů
       </h1>
       <Filtering

@@ -1,10 +1,14 @@
 .header {
+  position: fixed;
+  width: 100%;
+  max-width: 1920px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.75rem 6rem;
+  padding: 1rem 6rem;
   background-color: var(--light);
   box-shadow: var(--shadow);
+  z-index: 100;
 }
 
 .nav {

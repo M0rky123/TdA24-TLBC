@@ -28,7 +28,7 @@ body {
 main {
   display: flex;
   flex-direction: column;
-  padding: 6rem;
+  padding: 9rem 6rem 4rem;
 }
 
 input::-webkit-outer-spin-button,

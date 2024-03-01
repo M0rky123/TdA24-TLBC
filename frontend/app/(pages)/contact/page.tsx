@@ -36,8 +36,8 @@ export default async function page() {
           </ul>
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2607.451079556216!2d16.61849937830947!3d49.19200192284951!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x471294f9ab2ffb2b%3A0xac1b00a7c8488590!2zS8WZZW5vdsOhIDg5LzE5LCA2MDIgMDAgQnJuby1zdMWZZWQtVHJuaXTDoQ!5e0!3m2!1scs!2scz!4v1708692782075!5m2!1scs!2scz"
-            width="400"
-            height="400"
+            width="300"
+            height="300"
             style={{ border: "0", borderRadius: "4px", boxShadow: "0 0 3px #3339" }}
             allowFullScreen={false}
             loading="lazy"
