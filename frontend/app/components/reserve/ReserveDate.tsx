@@ -22,7 +22,8 @@ export default function ReserveDate({
   setTime: (time: number | undefined) => void;
 }) {
   const [loading, setLoading] = useState(false);
-  const [reserved, setReserved] = useState<number[]>([]);
+  const [freeHours, setFreeHours] = useState<number[]>([]);
+  const [freeReservations, setFreeReservations] = useState<number[]>([]);
   const [hours, setHours] = useState<number[]>([]);
 
   const hoursArray = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
@@ -31,16 +32,12 @@ export default function ReserveDate({
     setDate(newDate);
     setLoading(true);
     const res = await fetchReservationGet(uuid, dayjs(newDate).format("DD.MM.YYYY"));
-    console.log(res);
-    res[1] === 200 && setReserved(res[0]);
     setLoading(false);
   }
 
   useEffect(() => {
     async function fetch() {
-      const res = await fetchFreeReservationHours(uuid, "05", "2024")
-        .then((res) => res.json())
-        .then((res) => console.log(res));
+      const res = await fetchFreeReservationHours(uuid, "05", "2024").then((res) => setFreeHours(res));
       // res[1] === 200 && setHours(res[0]);
     }
     fetch();
