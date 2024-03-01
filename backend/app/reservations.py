@@ -1,5 +1,5 @@
 import sqlite3
-from flask import current_app
+from flask import current_app, jsonify
 import uuid as uuidgen
 
 from .email import reserve_confirm
@@ -48,3 +48,12 @@ def check_day(lecturer_id, date):
         else:
             return {"message": "No reservations for this day"}, 404
         
+def check_month(lecturer_id, month, year):
+    with sqlite3.connect(current_app.config['DATABASE']) as connection:
+        cursor = connection.cursor()
+        cursor.execute("SELECT strftime('%d', date), COUNT(*) FROM reservations WHERE date BETWEEN ? AND ? AND lecturer_id = ? GROUP BY date", (f"01.{month}.{year}", f"31.{month}.{year}", lecturer_id))
+        data = cursor.fetchall()
+        if data:
+            month_reservations = [{"date": row[0], "count": 12 - int(row[1])} for row in data]
+            print(month_reservations)
+            return month_reservations, 200
