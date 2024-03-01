@@ -90,7 +90,12 @@ button:hover:not(.react-calendar__navigation__label, :disabled) {
   gap: 1rem;
   list-style: none;
   text-align: center;
+  width: 100%;
   margin: auto 0;
+}
+
+.active-item-button {
+  background: var(--dark) !important;
 }
 
 .item {
@@ -98,11 +103,14 @@ button:hover:not(.react-calendar__navigation__label, :disabled) {
   place-content: center;
   background: var(--light);
   border-radius: 0.25rem;
+  width: fit-content;
+  margin: 0 auto;
 }
 
-.item_button {
+.item-button {
   display: inline;
   height: 100%;
+  width: 100%;
   padding: 0.5rem 0.75rem;
   border: 0;
   border-radius: 0.25rem;
