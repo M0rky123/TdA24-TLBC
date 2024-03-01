@@ -2,8 +2,10 @@ import json
 from flask import Flask, make_response, render_template, request, jsonify
 from flask_cors import CORS
 from . import db
-from .db import add_kantor, check_day, filter_kantor, generate_ical, get_all_tags, get_count, get, get_all, delete, get_locations, make_reservation, price_min_max, update, get_page
+from .db import add_kantor, filter_kantor, get_all_tags, get_count, get, get_all, delete, get_locations, price_min_max, update, get_page
 from .utils import get_admin_login, get_user_login, password_hash, api_verify, add_admin_to_db, remove_admin_from_db, time_index, user_verify
+from .reservations import check_day, make_reservation
+from .profile import generate_ical
 
 app = Flask(__name__, static_folder="static")
 app.config['DATABASE'] = './app/data/lecture.db'
@@ -131,11 +133,11 @@ def auth():
     data = request.json
     name = data.get('name')
     password = data.get('password')
-    success, lector_id, auth_key = get_user_login(name, password)
+    success, lector_id, auth_key, message = get_user_login(name, password)
     if success:
         return jsonify({"lector_id": lector_id, "auth_key": auth_key}), 200
     else:
-        return jsonify({"status": "Wrong username or password"}), 401
+        return jsonify({"status": message}), 401
     
 @app.route("/api/auth/check", methods=["POST"])
 def check_auth():
@@ -151,16 +153,7 @@ def check_auth():
 @app.route("/api/reserve/<lector_id>", methods=["POST"])
 async def reserve(lector_id):
     data = request.json
-    client_name = str(data.get('name'))
-    client_email = str(data.get('email'))
-    client_phone = str(data.get('phone'))
-    date = str(data.get('date'))
-    time = str(data.get('time'))
-    index = time_index(time)
-    online = str(data.get('online'))
-    place = data.get('place', None)
-    note = data.get('note', None)
-    message, status = make_reservation(lector_id, client_name, client_email, client_phone, date, time, index, online, place, note)
+    message, status = make_reservation(data, lector_id)
     return {"status": message}, status
 
 @app.route("/api/reserve/<lector_id>", methods=["GET"])
