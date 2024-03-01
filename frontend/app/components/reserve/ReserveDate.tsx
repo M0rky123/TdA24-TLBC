@@ -7,6 +7,7 @@ import { openSans } from "../../data/fonts";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { fetchFreeReservationHours, fetchReservationGet } from "@/app/utils/fetch";
+import Loader from "../Loader";
 
 export default function ReserveDate({
   uuid,
@@ -26,22 +27,25 @@ export default function ReserveDate({
     count: number;
   };
 
+  type FreeHours = {
+    reserved_times: number[];
+    status: number;
+  };
+
   const [loading, setLoading] = useState(false);
-  const [freeHours, setFreeHours] = useState<number[]>([]);
+  const [freeHours, setFreeHours] = useState<FreeHours[]>([]);
   const [freeReservations, setFreeReservations] = useState<Reservation[]>([]);
 
   const hoursArray = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
-  const test = [200, []];
 
   async function handleClick(newDate: Date) {
     console.log(dayjs(newDate));
     setDate(dayjs(newDate));
     setLoading(true);
-    await fetchReservationGet(uuid, dayjs(newDate).format("DD.MM.YYYY")).then((res) => {
+    fetchReservationGet(uuid, dayjs(newDate).format("DD.MM.YYYY")).then((res) => {
       setFreeHours(res);
-      console.log(res);
+      setLoading(false);
     });
-    setLoading(false);
   }
 
   function fetchFreeRes(date: Dayjs | null) {
@@ -57,12 +61,6 @@ export default function ReserveDate({
   useEffect(() => {
     fetchFreeRes(date);
   }, []);
-
-  useEffect(() => {
-    console.log(freeHours);
-  }, [freeHours]);
-
-  // "/api/reserve/<lector_id>" pro casy
 
   return (
     <div className={"container " + openSans}>
@@ -88,13 +86,19 @@ export default function ReserveDate({
         />
       </div>
       <ul className="list">
-        {freeHours.map((hour, index) => (
-          <li key={index} className="item">
-            <button className="item_button" onClick={() => setTime(hour)}>{`${hour.toString().padStart(2, "0")}:00 - ${(hour + 1)
-              .toString()
-              .padStart(2, "0")}:00 `}</button>
-          </li>
-        ))}
+        {loading ? (
+          <div>
+            <Loader />
+          </div>
+        ) : (
+          hoursArray.map((hour, index) => (
+            <li key={index} className="item">
+              <button className="item_button" disabled={freeHours[0]?.reserved_times?.includes(index)} onClick={() => setTime(hour)}>{`${hour
+                .toString()
+                .padStart(2, "0")}:00 - ${(hour + 1).toString().padStart(2, "0")}:00 `}</button>
+            </li>
+          ))
+        )}
       </ul>
     </div>
   );

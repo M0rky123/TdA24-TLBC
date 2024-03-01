@@ -24,13 +24,13 @@ export default async function page({ params: { uuid } }: { params: { uuid: strin
           <div className={style.info}>
             <span className={style.span}>
               <FontAwesomeIcon icon={faUser} className={style.icon} />
-              {lecturer.title_before + " " + lecturer.first_name + " " + lecturer.middle_name + " " + lecturer.last_name + " " + lecturer.title_after}
+              {lecturer?.title_before + " " + lecturer?.first_name + " " + lecturer?.middle_name + " " + lecturer?.last_name + " " + lecturer?.title_after}
             </span>
             <span className={style.span}>
-              <FontAwesomeIcon icon={faMapPin} className={style.icon} /> {lecturer.location}
+              <FontAwesomeIcon icon={faMapPin} className={style.icon} /> {lecturer?.location}
             </span>
             <span className={style.span}>
-              <FontAwesomeIcon icon={faSackDollar} className={style.icon} /> {lecturer.price_per_hour} Kč/hod
+              <FontAwesomeIcon icon={faSackDollar} className={style.icon} /> {lecturer?.price_per_hour} Kč/hod
             </span>
             <div className={style.listContainer}>
               <span>
