@@ -25,7 +25,7 @@ export default function ReserveRecap({ uuid, fName, lName, email, tel, text, onl
         <li>Telefonní číslo: {tel}</li>
         <li>Vaše zpráva: {text}</li>
         <li>Typ: {online ? "Online" : "Osobně"}</li>
-        <li>Místo: {place}</li>
+        {online && <li>Místo: {place}</li>}
         <li>Datum: {date ? dayjs(date).format("DD.MM.YYYY") : ""}</li>
         <li>Čas: {time ? `${time.toString().padStart(2, "0")}:00 - ${(time + 1).toString().padStart(2, "0")}:00 ` : ""}</li>
       </ul>
