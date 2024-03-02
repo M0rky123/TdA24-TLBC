@@ -29,7 +29,7 @@ export async function editLecturer(
   price: number,
   contact: { tels: string[]; emails: string[] }
 ) {
-  return fetchData(`http://localhost/api/lecturers/${uuid}`, {
+  return fetchData(`/api/lecturers/${uuid}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -54,14 +54,14 @@ export async function fetchReservations(uuid: string) {
 }
 
 export async function fetchFreeReservationHours(uuid: string, month?: string, year?: string) {
-  return fetchData(`http://localhost/api/reservations/${uuid}`, {
+  return fetchData(`/api/reservations/${uuid}`, {
     method: "GET",
     headers: { "Content-Type": "application/json", month: month, year: year },
   });
 }
 
 export async function fetchFilter(tagsArray: string[], locationsArray: string[], priceArray: number[]) {
-  return fetchData("http://localhost/api/lecturers/filter", {
+  return fetchData("/api/lecturers/filter", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -81,11 +81,11 @@ export async function putReservation(reservation_id: string, reaction: boolean, 
 }
 
 export async function fetchLecturer(id: string) {
-  return fetchData(`http://localhost/api/lecturers/${id}`);
+  return fetchData(`/api/lecturers/${id}`);
 }
 
 export async function fetchLecturerPack(page: number, limit: number) {
-  // return fetchData(`http://localhost:8080/api/lecturers/main/${page}`, {cache: "no-store"});
+  // return fetchData(`:8080/api/lecturers/main/${page}`, {cache: "no-store"});
   return fetchData(`/api/lecturers/main/${page}?limit=${limit}`, {
     method: "GET",
     headers: {
@@ -96,7 +96,7 @@ export async function fetchLecturerPack(page: number, limit: number) {
 }
 
 export async function fetchReservationGet(uuid: string, date: string) {
-  return fetchData(`http://localhost/api/reserve/${uuid}`, {
+  return fetchData(`/api/reserve/${uuid}`, {
     method: "GET",
     headers: { "Content-Type": "application/json", "Reserved-Day": date },
   });
@@ -113,7 +113,7 @@ export async function fetchReservationPost(
   place: string,
   note: string
 ) {
-  return fetchData(`http://localhost/api/reserve/${uuid}`, {
+  return fetchData(`/api/reserve/${uuid}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ name: name, email: email, phone: phone, date: date, time: time, online: online, place: place, note: note }),
@@ -123,5 +123,5 @@ export async function fetchReservationPost(
 }
 
 export async function getMetadata() {
-  return fetchData(`http://localhost/api/lecturers/metadata`);
+  return fetchData(`/api/lecturers/metadata`);
 }
