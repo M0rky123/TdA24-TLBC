@@ -14,7 +14,6 @@ app.json.sort_keys = False
 
 CORS(app)
 
-
 db.init_app(app)
 
 ######## Fáze 1 ########
@@ -195,17 +194,15 @@ def get_reservations_by_month(lector_id):
     data = request.headers
     month = data.get("Month")
     year = data.get("Year") 
-    print(month)
-    print(type(month))
-    print(year)
-    print(type(year))
+
+
     message, status = check_month(lector_id, month, year)
     return message, status
 
 @app.route("/api/reservations/<reservation_id>/react", methods=["PUT"])
 def react_to_reservation(reservation_id):
     data = request.json
-    reaction = data.get('reaction')
+    reaction = data.get('reaction') # true or false
     lecturer_id = data.get("lector_id")
     auth_token = data.get("auth_token")
     auth = lector_verify(lecturer_id, auth_token)

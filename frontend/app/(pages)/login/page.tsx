@@ -15,7 +15,7 @@ export default function Login() {
   const route = useRouter();
 
   async function handleLogin(username: string, password: string) {
-    await fetch("/api/auth", {
+    await fetch("http://localhost/api/auth", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name: username, password: password }),

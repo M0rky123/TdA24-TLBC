@@ -6,8 +6,8 @@ import { faAt, faMapPin, faSackDollar, faSquarePhone, faUser } from "@fortawesom
 import Reserve from "@/app/components/reserve/Reserve";
 import { fetchLecturer } from "@/app/utils/fetch";
 
-export default async function page({ params: { uuid } }: { params: { uuid: string } }) {
-  const lecturer = await fetchLecturer(uuid);
+export default async function Page({ params }: { params: { uuid: string } }) {
+  const lecturer = await fetchLecturer(params.uuid);
 
   for (let key in lecturer) {
     if (lecturer[key] === null) {
@@ -54,7 +54,7 @@ export default async function page({ params: { uuid } }: { params: { uuid: strin
             </div>
           </div>
         </section>
-        <Reserve uuid={uuid} />
+        <Reserve uuid={params.uuid} />
       </div>
     </>
   );

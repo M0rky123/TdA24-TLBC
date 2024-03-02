@@ -3,45 +3,27 @@
 import { useEffect, useState } from "react";
 import "./profile.css";
 import { fetchLecturer } from "@/app/utils/fetch";
-import { useRouter } from "next/navigation";
+import ProfileNav from "@/app/components/ProfileNav";
 
 export default function Profile() {
   const [lecturer, setLecturer] = useState<any>([]);
   const [loaded, setLoaded] = useState(false);
 
-  const route = useRouter();
-
   useEffect(() => {
-    const auth_key = sessionStorage.getItem("auth_key")!;
     const auth_uuid = sessionStorage.getItem("lector_id")!;
     async function lec() {
+      const auth_key = sessionStorage.getItem("auth_key")!;
+      const auth_uuid = sessionStorage.getItem("lector_id")!;
       await fetchLecturer(auth_uuid).then((res) => setLecturer(res));
       setLoaded(true);
     }
     lec();
   }, []);
 
+  
   return (
     <div className="profile-page">
-      <nav className="profile-nav">
-        <ul>
-          <li>
-            <a href="/profile">Profil</a>
-          </li>
-          <li>
-            <a href="/edit">Editace</a>
-          </li>
-          <li></li>
-          <li
-            onClick={() => {
-              sessionStorage.clear();
-              route.push("/login");
-            }}
-          >
-            Odhlásit se
-          </li>
-        </ul>
-      </nav>
+      <ProfileNav />
       {loaded ? (
         <table>
           <tr>

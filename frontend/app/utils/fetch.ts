@@ -1,7 +1,7 @@
 async function fetchData(url: string, options = {}) {
   try {
-     const response = await fetch(url, options);
-    //const response = await fetch("http://localhost:8080" + url, options);
+    //  const response = await fetch(url, options);
+    const response = await fetch("http://localhost" + url, options);
 
     if (!response.ok) {
       // throw page not found error
@@ -49,6 +49,10 @@ export async function editLecturer(
   });
 }
 
+export async function fetchReservations(uuid: string) {
+  return fetchData(`/api/lecturers/${uuid}/reservations`, { method: "GET", headers: { "Content-Type": "application/json" } });
+}
+
 export async function fetchFreeReservationHours(uuid: string, month?: string, year?: string) {
   return fetchData(`http://localhost/api/reservations/${uuid}`, {
     method: "GET",
@@ -63,6 +67,16 @@ export async function fetchFilter(tagsArray: string[], locationsArray: string[],
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ tag: tagsArray, loc: locationsArray, min_max: priceArray }),
+  });
+}
+
+export async function putReservation(reservation_id: string, reaction: boolean, lector_id: string, auth_token: string) {
+  return fetchData(`/api/reservations/${reservation_id}/react`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ reaction: reaction, lector_id: lector_id, auth_token: auth_token }),
   });
 }
 
